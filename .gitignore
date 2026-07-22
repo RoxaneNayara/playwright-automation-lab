@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+
+# Resultados e relatórios de testes
+allure-results/
+allure-report/
+playwright-report/
+test-results/
+blob-report/
+
+# Cobertura
+coverage/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
