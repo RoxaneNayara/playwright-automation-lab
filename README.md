@@ -21,6 +21,12 @@ Laboratório de automação de testes desenvolvido com **Playwright** e **TypeSc
 
 O projeto reúne testes funcionais, cenários end-to-end, validações de regras de negócio, acessibilidade automatizada, execução cross-browser, relatórios e integração contínua com GitHub Actions.
 
+## Release atual
+
+A versão estável mais recente é a **v1.0.0 — Automação Web**, com 23 cenários automatizados e 69 execuções cross-browser.
+
+[Ver release](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v1.0.0)
+
 ## Status do projeto
 
 - 23 cenários automatizados
