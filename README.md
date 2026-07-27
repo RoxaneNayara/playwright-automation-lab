@@ -7,7 +7,12 @@
 </p>
 
 <p align="center">
-  <img src="LINK_DO_BADGE" alt="Playwright Tests" />
+  <a href="https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml">
+    <img
+      src="https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml/badge.svg"
+      alt="Playwright Tests"
+    />
+  </a>
 </p>
 
 ## Sobre o projeto
