@@ -1,7 +1,3 @@
-## Sobre o projeto
-
-[![Playwright Tests](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml)
-
 <p align="center">
   <img
     src="./docs/images/playwright-automation-lab-banner.png"
@@ -9,6 +5,14 @@
     width="100%"
   />
 </p>
+
+<p align="center">
+  <img src="LINK_DO_BADGE" alt="Playwright Tests" />
+</p>
+
+## Sobre o projeto
+
+[![Playwright Tests](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml)
 
 Laboratório de automação de testes desenvolvido com **Playwright** e **TypeScript**, criado para estudos, experimentação e demonstração de boas práticas em automação Web.
 
