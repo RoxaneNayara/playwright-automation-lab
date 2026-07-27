@@ -17,8 +17,6 @@
 
 ## Sobre o projeto
 
-[![Playwright Tests](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml)
-
 Laboratório de automação de testes desenvolvido com **Playwright** e **TypeScript**, criado para estudos, experimentação e demonstração de boas práticas em automação Web.
 
 O projeto reúne testes funcionais, cenários end-to-end, validações de regras de negócio, acessibilidade automatizada, execução cross-browser, relatórios e integração contínua com GitHub Actions.
