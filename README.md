@@ -1,6 +1,14 @@
-# Playwright Automation Lab
+## Sobre o projeto
 
 [![Playwright Tests](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/RoxaneNayara/playwright-automation-lab/actions/workflows/playwright.yml)
+
+<p align="center">
+  <img
+    src="./docs/images/playwright-automation-lab-banner.jpg"
+    alt="Playwright Automation Lab — automação Web com Playwright e TypeScript"
+    width="100%"
+  />
+</p>
 
 Laboratório de automação de testes desenvolvido com **Playwright** e **TypeScript**, criado para estudos, experimentação e demonstração de boas práticas em automação Web.
 
