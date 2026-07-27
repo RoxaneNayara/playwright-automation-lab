@@ -4,7 +4,7 @@
 
 <p align="center">
   <img
-    src="./docs/images/playwright-automation-lab-banner.jpg"
+    src="./docs/images/playwright-automation-lab-banner.png"
     alt="Playwright Automation Lab — automação Web com Playwright e TypeScript"
     width="100%"
   />
