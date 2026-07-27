@@ -23,9 +23,9 @@ O projeto reúne testes funcionais, cenários end-to-end, validações de regras
 
 ## Release atual
 
-A versão estável mais recente é a **v1.0.0 — Automação Web**, com 23 cenários automatizados e 69 execuções cross-browser.
+A versão **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 execuções cross-browser.
 
-[Ver release](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v1.0.0)
+[Ver detalhes da release v1.0.0](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v1.0.0)
 
 ## Status do projeto
 
