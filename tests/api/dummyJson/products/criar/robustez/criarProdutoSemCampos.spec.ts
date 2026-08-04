@@ -32,32 +32,22 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
-      const response = await request.post(
-        `${baseUrl}/products/add`,
-        {
-          data: {},
-        }
-      );
+      const response = await request.post(`${baseUrl}/products/add`, {
+        data: {},
+      });
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoCriado =
-        (await response.json()) as ProdutoCriadoSemCampos;
+      const produtoCriado = (await response.json()) as ProdutoCriadoSemCampos;
 
       expect(produtoCriado.id).toBeGreaterThan(0);
 
-      const respostaCompleta =
-        JSON.stringify(produtoCriado).toLowerCase();
+      const respostaCompleta = JSON.stringify(produtoCriado).toLowerCase();
 
       expect(respostaCompleta).not.toContain('stack');
       expect(respostaCompleta).not.toContain('exception');

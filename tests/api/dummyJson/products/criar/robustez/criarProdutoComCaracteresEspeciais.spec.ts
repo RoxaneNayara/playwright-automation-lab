@@ -36,67 +36,46 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-        ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
-        const tamanhoDoTitulo = 1000;
-        const padraoDoTitulo = 'QA-Áéç@#$%&*()_+=[]{}!?/\\| ';
+      const tamanhoDoTitulo = 1000;
+      const padraoDoTitulo = 'QA-Áéç@#$%&*()_+=[]{}!?/\\| ';
 
-        const tituloComCaracteresEspeciais = padraoDoTitulo
+      const tituloComCaracteresEspeciais = padraoDoTitulo
         .repeat(Math.ceil(tamanhoDoTitulo / padraoDoTitulo.length))
         .slice(0, tamanhoDoTitulo);
 
-        const novoProduto = {
+      const novoProduto = {
         title: tituloComCaracteresEspeciais,
-        description:
-            'Produto criado para validar acentos, símbolos e caracteres especiais',
+        description: 'Produto criado para validar acentos, símbolos e caracteres especiais',
         category: 'laptops',
         price: 1500,
-        };
+      };
 
-      const response = await request.post(
-        `${baseUrl}/products/add`,
-        {
-          data: novoProduto,
-        }
-      );
+      const response = await request.post(`${baseUrl}/products/add`, {
+        data: novoProduto,
+      });
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoCriado =
-        (await response.json()) as ProdutoComCaracteresEspeciais;
+      const produtoCriado = (await response.json()) as ProdutoComCaracteresEspeciais;
 
       expect(produtoCriado.id).toBeGreaterThan(0);
 
-      expect(produtoCriado.title).toBe(
-        tituloComCaracteresEspeciais
-      );
+      expect(produtoCriado.title).toBe(tituloComCaracteresEspeciais);
 
-      expect(produtoCriado.title).toHaveLength(
-        tituloComCaracteresEspeciais.length
-      );
+      expect(produtoCriado.title).toHaveLength(tituloComCaracteresEspeciais.length);
 
-      expect(produtoCriado.description).toBe(
-        novoProduto.description
-      );
+      expect(produtoCriado.description).toBe(novoProduto.description);
 
-      expect(produtoCriado.category).toBe(
-        novoProduto.category
-      );
+      expect(produtoCriado.category).toBe(novoProduto.category);
 
-      expect(produtoCriado.price).toBe(
-        novoProduto.price
-      );
+      expect(produtoCriado.price).toBe(novoProduto.price);
 
-      const respostaCompleta =
-        JSON.stringify(produtoCriado).toLowerCase();
+      const respostaCompleta = JSON.stringify(produtoCriado).toLowerCase();
 
       expect(respostaCompleta).not.toContain('stack');
       expect(respostaCompleta).not.toContain('exception');

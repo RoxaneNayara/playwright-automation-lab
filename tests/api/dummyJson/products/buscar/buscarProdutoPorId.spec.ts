@@ -6,14 +6,7 @@ test.describe('API · DummyJSON · Produtos', () => {
   test(
     'buscar produto por ID deve retornar os dados do produto solicitado',
     {
-      tag: [
-        '@api',
-        '@dummyJson',
-        '@products',
-        '@get',
-        '@functionalSuitability',
-        '@vader-data',
-      ],
+      tag: ['@api', '@dummyJson', '@products', '@get', '@functionalSuitability', '@vader-data'],
     },
     async ({ request }) => {
       await allure.epic('API');
@@ -23,23 +16,16 @@ test.describe('API · DummyJSON · Produtos', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const produtoId = 1;
 
-      const response = await request.get(
-        `${baseUrl}/products/${produtoId}`
-      );
+      const response = await request.get(`${baseUrl}/products/${produtoId}`);
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
       const produto = await response.json();
 

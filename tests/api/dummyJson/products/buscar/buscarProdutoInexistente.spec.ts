@@ -30,29 +30,20 @@ test.describe('API · DummyJSON · Produtos', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const produtoIdInexistente = 999999;
 
-      const response = await request.get(
-        `${baseUrl}/products/${produtoIdInexistente}`
-      );
+      const response = await request.get(`${baseUrl}/products/${produtoIdInexistente}`);
 
       expect(response.status()).toBe(404);
       expect(response.ok()).toBeFalsy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
       const erro = (await response.json()) as RespostaDeErro;
 
-      expect(erro.message).toBe(
-        `Product with id '${produtoIdInexistente}' not found`
-      );
+      expect(erro.message).toBe(`Product with id '${produtoIdInexistente}' not found`);
 
       const respostaCompleta = JSON.stringify(erro).toLowerCase();
 

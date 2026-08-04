@@ -39,10 +39,7 @@ test.describe('API · DummyJSON · Produtos', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const limite = 5;
       const itensIgnorados = 10;
@@ -57,12 +54,9 @@ test.describe('API · DummyJSON · Produtos', () => {
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const resultado =
-        (await response.json()) as RespostaProdutosPaginados;
+      const resultado = (await response.json()) as RespostaProdutosPaginados;
 
       expect(Array.isArray(resultado.products)).toBeTruthy();
       expect(resultado.products).toHaveLength(limite);
@@ -77,13 +71,9 @@ test.describe('API · DummyJSON · Produtos', () => {
         expect(produto.price).toBeGreaterThan(0);
       }
 
-      const idsDosProdutos = resultado.products.map(
-        produto => produto.id
-      );
+      const idsDosProdutos = resultado.products.map((produto) => produto.id);
 
-      expect(new Set(idsDosProdutos).size).toBe(
-        idsDosProdutos.length
-      );
+      expect(new Set(idsDosProdutos).size).toBe(idsDosProdutos.length);
     }
   );
 });

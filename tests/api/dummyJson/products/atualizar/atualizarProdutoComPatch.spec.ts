@@ -31,10 +31,7 @@ test.describe('API · DummyJSON · Produtos', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const produtoId = 1;
 
@@ -43,30 +40,20 @@ test.describe('API · DummyJSON · Produtos', () => {
         price: 1999.9,
       };
 
-      const response = await request.patch(
-        `${baseUrl}/products/${produtoId}`,
-        {
-          data: dadosAtualizados,
-        }
-      );
+      const response = await request.patch(`${baseUrl}/products/${produtoId}`, {
+        data: dadosAtualizados,
+      });
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoAtualizado =
-        (await response.json()) as ProdutoAtualizadoParcialmente;
+      const produtoAtualizado = (await response.json()) as ProdutoAtualizadoParcialmente;
 
       expect(produtoAtualizado.id).toBe(produtoId);
-      expect(produtoAtualizado.title).toBe(
-        dadosAtualizados.title
-      );
-      expect(produtoAtualizado.price).toBe(
-        dadosAtualizados.price
-      );
+      expect(produtoAtualizado.title).toBe(dadosAtualizados.title);
+      expect(produtoAtualizado.price).toBe(dadosAtualizados.price);
     }
   );
 });

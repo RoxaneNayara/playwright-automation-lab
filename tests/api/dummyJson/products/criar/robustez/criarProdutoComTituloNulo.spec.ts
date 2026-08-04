@@ -36,53 +36,36 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const novoProduto = {
         title: null,
-        description:
-          'Produto criado para testar título nulo',
+        description: 'Produto criado para testar título nulo',
         category: 'laptops',
         price: 1500,
       };
 
-      const response = await request.post(
-        `${baseUrl}/products/add`,
-        {
-          data: novoProduto,
-        }
-      );
+      const response = await request.post(`${baseUrl}/products/add`, {
+        data: novoProduto,
+      });
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoCriado =
-        (await response.json()) as ProdutoComTituloNulo;
+      const produtoCriado = (await response.json()) as ProdutoComTituloNulo;
 
       expect(produtoCriado.id).toBeGreaterThan(0);
       expect(produtoCriado.title).toBeNull();
 
-      expect(produtoCriado.description).toBe(
-        novoProduto.description
-      );
+      expect(produtoCriado.description).toBe(novoProduto.description);
 
-      expect(produtoCriado.category).toBe(
-        novoProduto.category
-      );
+      expect(produtoCriado.category).toBe(novoProduto.category);
 
-      expect(produtoCriado.price).toBe(
-        novoProduto.price
-      );
+      expect(produtoCriado.price).toBe(novoProduto.price);
 
-      const respostaCompleta =
-        JSON.stringify(produtoCriado).toLowerCase();
+      const respostaCompleta = JSON.stringify(produtoCriado).toLowerCase();
 
       expect(respostaCompleta).not.toContain('stack');
       expect(respostaCompleta).not.toContain('exception');

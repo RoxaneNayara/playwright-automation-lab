@@ -36,57 +36,40 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const tamanhoDoTitulo = 1000;
       const tituloMuitoLongo = 'A'.repeat(tamanhoDoTitulo);
 
       const novoProduto = {
         title: tituloMuitoLongo,
-        description:
-          'Produto criado para testar estouro de campo no título',
+        description: 'Produto criado para testar estouro de campo no título',
         category: 'laptops',
         price: 1500,
       };
 
-      const response = await request.post(
-        `${baseUrl}/products/add`,
-        {
-          data: novoProduto,
-        }
-      );
+      const response = await request.post(`${baseUrl}/products/add`, {
+        data: novoProduto,
+      });
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoCriado =
-        (await response.json()) as ProdutoComTituloMuitoLongo;
+      const produtoCriado = (await response.json()) as ProdutoComTituloMuitoLongo;
 
       expect(produtoCriado.id).toBeGreaterThan(0);
       expect(produtoCriado.title).toBe(tituloMuitoLongo);
       expect(produtoCriado.title).toHaveLength(tamanhoDoTitulo);
 
-      expect(produtoCriado.description).toBe(
-        novoProduto.description
-      );
+      expect(produtoCriado.description).toBe(novoProduto.description);
 
-      expect(produtoCriado.category).toBe(
-        novoProduto.category
-      );
+      expect(produtoCriado.category).toBe(novoProduto.category);
 
-      expect(produtoCriado.price).toBe(
-        novoProduto.price
-      );
+      expect(produtoCriado.price).toBe(novoProduto.price);
 
-      const respostaCompleta =
-        JSON.stringify(produtoCriado).toLowerCase();
+      const respostaCompleta = JSON.stringify(produtoCriado).toLowerCase();
 
       expect(respostaCompleta).not.toContain('stack');
       expect(respostaCompleta).not.toContain('exception');

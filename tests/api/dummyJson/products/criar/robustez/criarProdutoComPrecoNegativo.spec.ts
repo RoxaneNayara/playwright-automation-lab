@@ -36,35 +36,25 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const novoProduto = {
         title: 'Produto com preço negativo',
-        description:
-          'Produto criado para testar valor negativo no preço',
+        description: 'Produto criado para testar valor negativo no preço',
         category: 'laptops',
         price: -1500,
       };
 
-      const response = await request.post(
-        `${baseUrl}/products/add`,
-        {
-          data: novoProduto,
-        }
-      );
+      const response = await request.post(`${baseUrl}/products/add`, {
+        data: novoProduto,
+      });
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoCriado =
-        (await response.json()) as ProdutoComPrecoNegativo;
+      const produtoCriado = (await response.json()) as ProdutoComPrecoNegativo;
 
       expect(produtoCriado.id).toBeGreaterThan(0);
       expect(produtoCriado.title).toBe(novoProduto.title);
@@ -73,8 +63,7 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
       expect(typeof produtoCriado.price).toBe('number');
       expect(produtoCriado.price).toBeLessThan(0);
 
-      const respostaCompleta =
-        JSON.stringify(produtoCriado).toLowerCase();
+      const respostaCompleta = JSON.stringify(produtoCriado).toLowerCase();
 
       expect(respostaCompleta).not.toContain('stack');
       expect(respostaCompleta).not.toContain('exception');

@@ -32,39 +32,27 @@ test.describe('API · DummyJSON · Produtos', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const produtoId = 1;
 
-      const response = await request.delete(
-        `${baseUrl}/products/${produtoId}`
-      );
+      const response = await request.delete(`${baseUrl}/products/${produtoId}`);
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoExcluido =
-        (await response.json()) as ProdutoExcluido;
+      const produtoExcluido = (await response.json()) as ProdutoExcluido;
 
       expect(produtoExcluido.id).toBe(produtoId);
       expect(produtoExcluido.title).toBeTruthy();
       expect(produtoExcluido.isDeleted).toBe(true);
       expect(produtoExcluido.deletedOn).toBeTruthy();
 
-      const dataDaExclusao = new Date(
-        produtoExcluido.deletedOn
-      );
+      const dataDaExclusao = new Date(produtoExcluido.deletedOn);
 
-      expect(dataDaExclusao.toString()).not.toBe(
-        'Invalid Date'
-      );
+      expect(dataDaExclusao.toString()).not.toBe('Invalid Date');
     }
   );
 });

@@ -38,46 +38,32 @@ test.describe('API · DummyJSON · Produtos', () => {
 
       const baseUrl = config.getBaseUrl('DummyJsonApi');
 
-      expect(
-        baseUrl,
-        'BaseUrl não configurada para DummyJsonApi'
-      ).toBeTruthy();
+      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
 
       const novoProduto: NovoProduto = {
         title: 'Notebook QA Automation',
-        description:
-          'Notebook criado para estudos de automação de testes',
+        description: 'Notebook criado para estudos de automação de testes',
         category: 'laptops',
         price: 4999.9,
         stock: 15,
         brand: 'Quality Lab',
       };
 
-      const response = await request.post(
-        `${baseUrl}/products/add`,
-        {
-          data: novoProduto,
-        }
-      );
+      const response = await request.post(`${baseUrl}/products/add`, {
+        data: novoProduto,
+      });
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();
 
-      expect(response.headers()['content-type']).toContain(
-        'application/json'
-      );
+      expect(response.headers()['content-type']).toContain('application/json');
 
-      const produtoCriado =
-        (await response.json()) as ProdutoCriado;
+      const produtoCriado = (await response.json()) as ProdutoCriado;
 
       expect(produtoCriado.id).toBeGreaterThan(0);
       expect(produtoCriado.title).toBe(novoProduto.title);
-      expect(produtoCriado.description).toBe(
-        novoProduto.description
-      );
-      expect(produtoCriado.category).toBe(
-        novoProduto.category
-      );
+      expect(produtoCriado.description).toBe(novoProduto.description);
+      expect(produtoCriado.category).toBe(novoProduto.category);
       expect(produtoCriado.price).toBe(novoProduto.price);
       expect(produtoCriado.stock).toBe(novoProduto.stock);
       expect(produtoCriado.brand).toBe(novoProduto.brand);
