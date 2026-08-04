@@ -25,6 +25,13 @@ export default defineConfig({
 
   projects: [
     {
+      name: 'api-dummyjson',
+      testDir: './tests/api/dummyJson',
+      use: {
+        baseURL: 'https://dummyjson.com',
+      },
+    },
+    {
       name: 'web-todo-chromium',
       testDir: './tests/web/todo',
       use: {
