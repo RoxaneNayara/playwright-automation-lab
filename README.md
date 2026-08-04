@@ -29,13 +29,15 @@ A versão **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 
 
 ## Status do projeto
 
-- 23 cenários automatizados
-- 69 execuções cross-browser
-- Chromium, Firefox e WebKit
-- 100% dos testes aprovados
-- ESLint, Prettier e TypeScript configurados
-- Relatórios Playwright e Allure
-- Pipeline automatizada no GitHub Actions
+- 23 cenários automatizados Web;
+- 16 cenários automatizados de API;
+- 69 execuções Web cross-browser;
+- 85 execuções automatizadas na suíte completa atual;
+- Chromium, Firefox e WebKit;
+- testes de API com Playwright;
+- ESLint, Prettier e TypeScript configurados;
+- relatórios Playwright e Allure;
+- pipeline automatizada no GitHub Actions.
 
 ## Aplicações utilizadas
 
@@ -75,6 +77,31 @@ Cenários cobertos:
 - retorno ao catálogo;
 - análise automatizada de acessibilidade.
 
+### DummyJSON API
+
+API pública utilizada para estudos de automação de testes de API com Playwright.
+
+A suíte atual possui 16 cenários automatizados para o recurso de produtos, cobrindo:
+
+- consulta de produto por ID;
+- busca por termo;
+- paginação;
+- criação de produto;
+- atualização com PUT;
+- atualização parcial com PATCH;
+- exclusão simulada;
+- produto inexistente;
+- campos ausentes;
+- título vazio;
+- título nulo;
+- preço em formato textual;
+- preço negativo;
+- título muito longo;
+- caracteres especiais;
+- Content-Type incompatível.
+
+As operações de escrita da DummyJSON são simuladas e não persistem os dados. Por isso, os testes validam status HTTP, estrutura da resposta, dados retornados e comportamento observado, sem afirmar persistência real.
+
 ## Tecnologias e ferramentas
 
 - Node.js
@@ -113,6 +140,31 @@ playwright-automation-lab
 │       └── support
 │           └── sauceDemo
 ├── tests
+│   ├── api
+│   │   └── dummyJson
+│   │       └── products
+│   │           ├── atualizar
+│   │           │   ├── atualizarProdutoComPatch.spec.ts
+│   │           │   └── atualizarProdutoComPut.spec.ts
+│   │           ├── buscar
+│   │           │   ├── buscarProdutoInexistente.spec.ts
+│   │           │   ├── buscarProdutoPorId.spec.ts
+│   │           │   └── buscarProdutosPorTermo.spec.ts
+│   │           ├── criar
+│   │           │   ├── robustez
+│   │           │   │   ├── criarProdutoComCaracteresEspeciais.spec.ts
+│   │           │   │   ├── criarProdutoComContentTypeInvalido.spec.ts
+│   │           │   │   ├── criarProdutoComPrecoNegativo.spec.ts
+│   │           │   │   ├── criarProdutoComPrecoTexto.spec.ts
+│   │           │   │   ├── criarProdutoComTituloMuitoLongo.spec.ts
+│   │           │   │   ├── criarProdutoComTituloNulo.spec.ts
+│   │           │   │   ├── criarProdutoComTituloVazio.spec.ts
+│   │           │   │   └── criarProdutoSemCampos.spec.ts
+│   │           │   └── criarProduto.spec.ts
+│   │           ├── excluir
+│   │           │   └── excluirProduto.spec.ts
+│   │           └── listar
+│   │               └── listarProdutosComPaginacao.spec.ts
 │   └── web
 │       ├── sauceDemo
 │       │   ├── accessibility
@@ -124,7 +176,9 @@ playwright-automation-lab
 ├── eslint.config.js
 ├── package.json
 ├── playwright.config.ts
+├── README.md
 └── tsconfig.json
+
 ```
 
 ## Padrões utilizados
