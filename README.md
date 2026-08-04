@@ -270,6 +270,6 @@ A versão **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 
 
 **Roxane Nayara**
 
-QA Lead e Coordenadora de QA, com atuação em estratégia de testes, liderança de qualidade, desenvolvimento de pessoas, automação, governança e melhoria contínua.
+QA Lead | Coordenadora de QA, com atuação em estratégia de testes, liderança de qualidade, desenvolvimento de pessoas, automação, governança e melhoria contínua.
 
 GitHub: [RoxaneNayara](https://github.com/RoxaneNayara)
