@@ -1,7 +1,7 @@
 <p align="center">
   <img
     src="./docs/images/playwright-automation-lab-banner.png"
-    alt="Playwright Automation Lab — automação Web com Playwright e TypeScript"
+    alt="Playwright Automation Lab — automação Web e API com Playwright e TypeScript"
     width="100%"
   />
 </p>
@@ -17,24 +17,16 @@
 
 ## Sobre o projeto
 
-Laboratório de automação de testes desenvolvido com **Playwright** e **TypeScript**, criado para estudos, experimentação e demonstração de boas práticas em automação Web.
+Laboratório de automação de testes desenvolvido com **Playwright** e **TypeScript**, criado para estudos, experimentação e demonstração de boas práticas em automação Web e de APIs.
 
-O projeto reúne testes funcionais, cenários end-to-end, validações de regras de negócio, acessibilidade automatizada, execução cross-browser, relatórios e integração contínua com GitHub Actions.
-
-## Release atual
-
-A versão **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 execuções cross-browser.
-
-[Ver detalhes da release v1.0.0](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v1.0.0)
+O projeto reúne testes funcionais, cenários end-to-end, validações de regras de negócio, testes de robustez de API, acessibilidade automatizada, execução cross-browser, relatórios e integração contínua com GitHub Actions.
 
 ## Status do projeto
 
 - 23 cenários automatizados Web;
 - 16 cenários automatizados de API;
 - 69 execuções Web cross-browser;
-- 85 execuções automatizadas na suíte completa atual;
 - Chromium, Firefox e WebKit;
-- testes de API com Playwright;
 - ESLint, Prettier e TypeScript configurados;
 - relatórios Playwright e Allure;
 - pipeline automatizada no GitHub Actions.
@@ -43,62 +35,17 @@ A versão **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 
 
 ### TodoMVC
 
-Aplicação utilizada para praticar operações básicas de uma lista de tarefas.
-
-Cenários cobertos:
-
-- adicionar uma tarefa;
-- concluir uma tarefa;
-- excluir uma tarefa;
-- validar atualização da lista e do contador.
+Aplicação utilizada para praticar operações básicas de uma lista de tarefas, com cenários de criação, conclusão, exclusão e atualização da lista.
 
 ### SauceDemo
 
-Aplicação de demonstração de e-commerce utilizada para automatizar jornadas mais completas.
-
-Cenários cobertos:
-
-- login com credenciais válidas;
-- login com credenciais inválidas;
-- usuário bloqueado;
-- adição de produtos ao carrinho;
-- remoção de produtos;
-- remoção do último produto;
-- persistência do carrinho durante a navegação;
-- ordenação por menor preço;
-- ordenação por maior preço;
-- campos obrigatórios do checkout;
-- cancelamento do checkout;
-- cancelamento na revisão do pedido;
-- cálculo do subtotal;
-- cálculo do total com imposto;
-- finalização da compra;
-- limpeza do carrinho após a compra;
-- retorno ao catálogo;
-- análise automatizada de acessibilidade.
+Aplicação de demonstração de e-commerce utilizada para automatizar jornadas de login, catálogo, carrinho, checkout, regras financeiras e acessibilidade.
 
 ### DummyJSON API
 
 API pública utilizada para estudos de automação de testes de API com Playwright.
 
-A suíte atual possui 16 cenários automatizados para o recurso de produtos, cobrindo:
-
-- consulta de produto por ID;
-- busca por termo;
-- paginação;
-- criação de produto;
-- atualização com PUT;
-- atualização parcial com PATCH;
-- exclusão simulada;
-- produto inexistente;
-- campos ausentes;
-- título vazio;
-- título nulo;
-- preço em formato textual;
-- preço negativo;
-- título muito longo;
-- caracteres especiais;
-- Content-Type incompatível.
+A suíte cobre operações CRUD, busca, paginação, cenários negativos e testes de robustez envolvendo campos ausentes, valores vazios ou nulos, tipos incorretos, preços negativos, textos extensos, caracteres especiais e Content-Type incompatível.
 
 As operações de escrita da DummyJSON são simuladas e não persistem os dados. Por isso, os testes validam status HTTP, estrutura da resposta, dados retornados e comportamento observado, sem afirmar persistência real.
 
@@ -113,139 +60,63 @@ As operações de escrita da DummyJSON são simuladas e não persistem os dados.
 - ESLint
 - Prettier
 - Git
-- GitHub
 - GitHub Actions
 
 ## Arquitetura do projeto
 
-O projeto utiliza separação de responsabilidades entre testes, páginas, fluxos, configurações e dados.
+O projeto separa testes Web e API, configurações, páginas, fluxos e dados de apoio.
 
 ```text
 playwright-automation-lab
 ├── .github
 │   └── workflows
-│       └── playwright.yml
 ├── config
-│   └── appsettings.json
 ├── src
 │   ├── core
-│   │   └── config
-│   │       └── configurationManager.ts
 │   └── web
 │       ├── flows
-│       │   └── sauceDemo
 │       ├── pages
-│       │   ├── sauceDemo
-│       │   └── todo
 │       └── support
-│           └── sauceDemo
 ├── tests
 │   ├── api
 │   │   └── dummyJson
 │   │       └── products
 │   │           ├── atualizar
-│   │           │   ├── atualizarProdutoComPatch.spec.ts
-│   │           │   └── atualizarProdutoComPut.spec.ts
 │   │           ├── buscar
-│   │           │   ├── buscarProdutoInexistente.spec.ts
-│   │           │   ├── buscarProdutoPorId.spec.ts
-│   │           │   └── buscarProdutosPorTermo.spec.ts
 │   │           ├── criar
-│   │           │   ├── robustez
-│   │           │   │   ├── criarProdutoComCaracteresEspeciais.spec.ts
-│   │           │   │   ├── criarProdutoComContentTypeInvalido.spec.ts
-│   │           │   │   ├── criarProdutoComPrecoNegativo.spec.ts
-│   │           │   │   ├── criarProdutoComPrecoTexto.spec.ts
-│   │           │   │   ├── criarProdutoComTituloMuitoLongo.spec.ts
-│   │           │   │   ├── criarProdutoComTituloNulo.spec.ts
-│   │           │   │   ├── criarProdutoComTituloVazio.spec.ts
-│   │           │   │   └── criarProdutoSemCampos.spec.ts
-│   │           │   └── criarProduto.spec.ts
+│   │           │   └── robustez
 │   │           ├── excluir
-│   │           │   └── excluirProduto.spec.ts
 │   │           └── listar
-│   │               └── listarProdutosComPaginacao.spec.ts
 │   └── web
 │       ├── sauceDemo
-│       │   ├── accessibility
-│       │   ├── carrinho
-│       │   ├── catalogo
-│       │   ├── checkout
-│       │   └── login
 │       └── todo
 ├── eslint.config.js
 ├── package.json
 ├── playwright.config.ts
 ├── README.md
 └── tsconfig.json
-
 ```
 
 ## Padrões utilizados
 
 ### Page Object Model
 
-Os elementos e comportamentos das páginas ficam centralizados em classes de página.
-
-Exemplos:
-
-```text
-SauceLoginPage
-SauceInventoryPage
-SauceCartPage
-SauceCheckoutInformationPage
-SauceCheckoutOverviewPage
-SauceCheckoutCompletePage
-TodoPage
-```
-
-Essa abordagem reduz duplicação, melhora a manutenção e mantém os testes focados na regra que está sendo validada.
+Os elementos e comportamentos das páginas ficam centralizados em classes de página, reduzindo duplicação e mantendo os testes focados nas regras validadas.
 
 ### Flows
 
-Fluxos reutilizáveis agrupam sequências de ações realizadas em diferentes testes.
-
-Exemplo:
-
-```text
-SauceLoginFlow
-```
-
-O fluxo de login centraliza a navegação e o preenchimento das credenciais sem esconder as validações realizadas pelos testes.
+Fluxos reutilizáveis agrupam sequências de ações realizadas em diferentes testes, sem esconder as validações.
 
 ### Dados de teste
 
-Credenciais, produtos e informações do checkout ficam organizados em:
-
-```text
-src/web/support/sauceDemo/sauceTestData.ts
-```
-
-Essa separação evita repetição de valores e facilita a manutenção dos cenários.
+Credenciais, produtos e informações de checkout ficam separados dos testes para facilitar manutenção e reutilização.
 
 ## Instalação
 
-Clone o repositório:
-
 ```bash
 git clone https://github.com/RoxaneNayara/playwright-automation-lab.git
-```
-
-Acesse a pasta:
-
-```bash
 cd playwright-automation-lab
-```
-
-Instale as dependências:
-
-```bash
 npm ci
-```
-
-Instale os navegadores do Playwright:
-
-```bash
 npx playwright install
 ```
 
@@ -257,138 +128,70 @@ npx playwright install --with-deps
 
 ## Execução dos testes
 
-### Suíte completa cross-browser
+### Suíte Web cross-browser
 
 ```bash
 npm run test:cross-browser
 ```
 
-Executa os 23 cenários em Chromium, Firefox e WebKit, totalizando 69 execuções.
+### API DummyJSON
 
-### Apenas Chromium
+```bash
+npx playwright test tests/api/dummyJson --project=api-dummyjson
+```
+
+### Execuções específicas
 
 ```bash
 npm run test:chromium
-```
-
-### Apenas Firefox
-
-```bash
 npm run test:firefox
-```
-
-### Apenas WebKit
-
-```bash
 npm run test:webkit
-```
-
-### Apenas TodoMVC
-
-```bash
 npm run test:todo
-```
-
-### Apenas SauceDemo
-
-```bash
 npm run test:saucedemo
-```
-
-### Testes smoke
-
-```bash
 npm run test:smoke
-```
-
-### Execução com navegador visível
-
-```bash
 npm run test:headed
 ```
 
 ## Controles de qualidade
 
-### Verificação do TypeScript
-
 ```bash
+npm run format
+npm run format:check
 npm run typecheck
-```
-
-Valida tipagem, imports, aliases, propriedades e regras configuradas no `tsconfig.json`.
-
-### ESLint
-
-```bash
 npm run lint
 ```
 
-Verifica padrões de qualidade e possíveis inconsistências no código.
-
-### Prettier
-
-Verificar formatação:
-
-```bash
-npm run format:check
-```
-
-Aplicar formatação:
+Rotina recomendada antes de cada commit:
 
 ```bash
 npm run format
+npm run format:check
+npm run typecheck
+npm run lint
+npx playwright test tests/api/dummyJson --project=api-dummyjson
 ```
 
 ## Relatórios
 
-### Relatório HTML do Playwright
-
-Após executar os testes:
+### Playwright HTML
 
 ```bash
 npx playwright show-report
 ```
 
-### Allure Report
-
-Gerar o relatório:
+### Allure
 
 ```bash
 npm run report:generate
-```
-
-Abrir o relatório:
-
-```bash
 npm run report:open
-```
-
-Executar o servidor temporário do Allure:
-
-```bash
 npm run report:serve
 ```
 
 ## Acessibilidade
 
-A suíte utiliza `@axe-core/playwright` para identificar automaticamente violações de acessibilidade.
+A suíte utiliza `@axe-core/playwright` para identificar violações automatizadas de acessibilidade.
 
-A tela de login é validada contra violações automáticas WCAG de níveis A e AA.
-
-No catálogo, o projeto mantém uma baseline explícita para uma violação conhecida:
-
-```text
-select-name
-```
-
-A baseline permite:
-
-- registrar o débito de acessibilidade conhecido;
-- impedir o surgimento silencioso de novas violações;
-- detectar quando a violação existente for corrigida;
-- manter a análise automatizada transparente.
-
-A automação de acessibilidade complementa, mas não substitui, testes manuais com teclado, leitores de tela e avaliação humana.
+A automação complementa, mas não substitui, testes manuais com teclado, leitores de tela e avaliação humana.
 
 ## GitHub Actions
 
@@ -398,75 +201,75 @@ O workflow está localizado em:
 .github/workflows/playwright.yml
 ```
 
-A pipeline é executada em `push`, `pull_request` e também pode ser iniciada manualmente.
-
-Etapas executadas:
+A pipeline executa:
 
 ```text
-Checkout do repositório
-→ configuração do Node.js
+Checkout
 → instalação das dependências
 → instalação dos navegadores
-→ verificação do Prettier
-→ verificação do TypeScript
-→ execução do ESLint
-→ testes cross-browser
-→ upload do relatório Playwright
-→ upload dos resultados Allure
+→ Prettier
+→ TypeScript
+→ ESLint
+→ testes Playwright
+→ upload dos relatórios
 ```
-
-Os relatórios são disponibilizados como artefatos da execução no GitHub Actions.
 
 ## Tags
 
-Os testes utilizam tags para facilitar a seleção de cenários:
+Os testes utilizam tags por tipo, aplicação, recurso, operação e característica de qualidade.
+
+Exemplos:
 
 ```text
 @web
+@api
 @todo
 @sauceDemo
+@dummyJson
+@products
 @smoke
-@regression
 @negative
-@e2e
-@login
-@carrinho
-@catalogo
-@checkout
-@financial
-@accessibility
+@robustness
+@functionalSuitability
+@reliability
+@compatibility
+@security
 ```
 
-Exemplo de execução por tag:
+Execução por tag:
 
 ```bash
 npx playwright test --grep "@checkout"
 ```
 
-No PowerShell, as aspas evitam que o caractere `@` seja interpretado pelo terminal.
-
 ## Classificação do projeto
 
-Este repositório representa um **laboratório de estudos e prova de conceito**, com práticas estruturadas para demonstrar automação de testes.
+Este repositório representa um **laboratório de estudos e prova de conceito**.
 
-Os padrões implementados podem servir como referência, mas devem ser avaliados e adaptados antes de uso em sistemas corporativos, considerando arquitetura, segurança, dados, ambientes, criticidade e estratégia de testes de cada produto.
+Os padrões implementados podem servir como referência, mas devem ser avaliados e adaptados antes do uso em sistemas corporativos, considerando arquitetura, segurança, dados, ambientes, criticidade e estratégia de testes.
+
+## Release atual
+
+A versão **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 execuções cross-browser.
+
+[Ver detalhes da release v1.0.0](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v1.0.0)
 
 ## Próximas evoluções
 
-- testes de API com Playwright;
-- validação de contratos;
+- criação de clients e models reutilizáveis para API;
+- validação de contratos com JSON Schema;
+- autenticação reutilizável;
+- testes seguros de segurança de API;
 - integração entre API e interface;
 - geração de dados por API;
-- autenticação reutilizável;
 - regressão visual;
 - publicação navegável do Allure;
-- evolução da documentação;
-- expansão da pipeline de integração contínua.
+- evolução da documentação.
 
 ## Autora
 
 **Roxane Nayara**
 
-Coordenadora de QA, com atuação em processos de qualidade, estratégia de testes, desenvolvimento de pessoas e evolução da automação.
+QA Lead e Coordenadora de QA, com atuação em estratégia de testes, liderança de qualidade, desenvolvimento de pessoas, automação, governança e melhoria contínua.
 
 GitHub: [RoxaneNayara](https://github.com/RoxaneNayara)
