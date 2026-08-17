@@ -32,6 +32,11 @@ export default defineConfig({
       },
     },
     {
+      name: 'llm',
+      testDir: './tests/llm',
+      workers: 1,
+    },
+    {
       name: 'web-todo-chromium',
       testDir: './tests/web/todo',
       use: {

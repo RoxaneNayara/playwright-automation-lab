@@ -41,5 +41,8 @@
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.8.1"
+  },
+  "dependencies": {
+    "openai": "^7.4.0"
   }
 }
