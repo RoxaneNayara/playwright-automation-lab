@@ -17,25 +17,14 @@ test.describe('LLM - Fundamentals - Short Response', () => {
 
     const actualAnswer = response.output_text.trim().toLowerCase();
 
-    const acceptedTerms = [
-      'críticas',
-      'críticos',
-      'essenciais',
-      'principais',
-      'fundamentais',
-    ];
+    const acceptedTerms = ['críticas', 'críticos', 'essenciais', 'principais', 'fundamentais'];
 
-    const containsRelevantTerm = acceptedTerms.some((term) =>
-      actualAnswer.includes(term)
-    );
+    const containsRelevantTerm = acceptedTerms.some((term) => actualAnswer.includes(term));
 
     expect(actualAnswer).not.toBe('');
     expect(containsRelevantTerm).toBeTruthy();
 
-    const wordCount = response.output_text
-    .trim()
-    .split(/\s+/)
-    .length;
+    const wordCount = response.output_text.trim().split(/\s+/).length;
 
     expect(wordCount).toBeLessThanOrEqual(15);
   });

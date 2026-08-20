@@ -29,32 +29,19 @@ test.describe('LLM - Embeddings - Top K Retrieval', () => {
 
     const response = await client.embeddings.create({
       model: 'text-embedding-3-small',
-      input: [
-        question,
-        ...documents.map((document) => document.text),
-      ],
+      input: [question, ...documents.map((document) => document.text)],
     });
 
     console.log('Usage:', response.usage);
 
     const questionEmbedding = response.data[0].embedding;
 
-    const cosineSimilarity = (
-      vectorA: number[],
-      vectorB: number[],
-    ): number => {
-      const dotProduct = vectorA.reduce(
-        (sum, value, index) => sum + value * vectorB[index],
-        0,
-      );
+    const cosineSimilarity = (vectorA: number[], vectorB: number[]): number => {
+      const dotProduct = vectorA.reduce((sum, value, index) => sum + value * vectorB[index], 0);
 
-      const magnitudeA = Math.sqrt(
-        vectorA.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeA = Math.sqrt(vectorA.reduce((sum, value) => sum + value * value, 0));
 
-      const magnitudeB = Math.sqrt(
-        vectorB.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeB = Math.sqrt(vectorB.reduce((sum, value) => sum + value * value, 0));
 
       return dotProduct / (magnitudeA * magnitudeB);
     };
@@ -62,10 +49,7 @@ test.describe('LLM - Embeddings - Top K Retrieval', () => {
     const rankedDocuments = documents
       .map((document, index) => ({
         id: document.id,
-        similarity: cosineSimilarity(
-          questionEmbedding,
-          response.data[index + 1].embedding,
-        ),
+        similarity: cosineSimilarity(questionEmbedding, response.data[index + 1].embedding),
       }))
       .sort((a, b) => b.similarity - a.similarity);
 

@@ -5,31 +5,16 @@ test.describe('LLM - Fundamentals - Keyword Validation', () => {
     const simulatedResponse =
       'Smoke testing não valida funcionalidades principais antes de testes aprofundados.';
 
-    const actualAnswer = simulatedResponse
-      .trim()
-      .toLowerCase();
+    const actualAnswer = simulatedResponse.trim().toLowerCase();
 
-    const acceptedTerms = [
-      'críticas',
-      'críticos',
-      'essenciais',
-      'principais',
-      'fundamentais',
-    ];
+    const acceptedTerms = ['críticas', 'críticos', 'essenciais', 'principais', 'fundamentais'];
 
-    const containsRelevantTerm = acceptedTerms.some((term) =>
-      actualAnswer.includes(term)
-    );
+    const containsRelevantTerm = acceptedTerms.some((term) => actualAnswer.includes(term));
 
-    const negativePatterns = [
-        'não valida',
-        'não verifica',
-        'não testa',
-        'não confirma',
-    ];
+    const negativePatterns = ['não valida', 'não verifica', 'não testa', 'não confirma'];
 
     const containsContradiction = negativePatterns.some((pattern) =>
-    actualAnswer.includes(pattern)
+      actualAnswer.includes(pattern)
     );
 
     expect(containsRelevantTerm).toBeTruthy();

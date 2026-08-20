@@ -29,30 +29,17 @@ test.describe('LLM - RAG - Basic Manual RAG', () => {
 
     const embeddingResponse = await client.embeddings.create({
       model: 'text-embedding-3-small',
-      input: [
-        question,
-        ...documents.map((document) => document.text),
-      ],
+      input: [question, ...documents.map((document) => document.text)],
     });
 
     const questionEmbedding = embeddingResponse.data[0].embedding;
 
-    const cosineSimilarity = (
-      vectorA: number[],
-      vectorB: number[],
-    ): number => {
-      const dotProduct = vectorA.reduce(
-        (sum, value, index) => sum + value * vectorB[index],
-        0,
-      );
+    const cosineSimilarity = (vectorA: number[], vectorB: number[]): number => {
+      const dotProduct = vectorA.reduce((sum, value, index) => sum + value * vectorB[index], 0);
 
-      const magnitudeA = Math.sqrt(
-        vectorA.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeA = Math.sqrt(vectorA.reduce((sum, value) => sum + value * value, 0));
 
-      const magnitudeB = Math.sqrt(
-        vectorB.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeB = Math.sqrt(vectorB.reduce((sum, value) => sum + value * value, 0));
 
       return dotProduct / (magnitudeA * magnitudeB);
     };
@@ -62,7 +49,7 @@ test.describe('LLM - RAG - Basic Manual RAG', () => {
         ...document,
         similarity: cosineSimilarity(
           questionEmbedding,
-          embeddingResponse.data[index + 1].embedding,
+          embeddingResponse.data[index + 1].embedding
         ),
       }))
       .sort((a, b) => b.similarity - a.similarity);
@@ -74,14 +61,11 @@ test.describe('LLM - RAG - Basic Manual RAG', () => {
       retrievedDocuments.map((document) => ({
         id: document.id,
         similarity: document.similarity,
-      })),
+      }))
     );
 
     const retrievedContext = retrievedDocuments
-      .map(
-        (document) =>
-          `[${document.id}]\n${document.text}`,
-      )
+      .map((document) => `[${document.id}]\n${document.text}`)
       .join('\n\n');
 
     const response = await client.responses.create({
@@ -107,24 +91,21 @@ ${question}
 
     expect(retrievedDocuments[0].id).toBe('DOC_B');
 
-    expect(
-      retrievedDocuments.map((document) => document.id),
-    ).toContain('DOC_C');
+    expect(retrievedDocuments.map((document) => document.id)).toContain('DOC_C');
 
     expect(answer).toContain('30 minutos');
 
     const blockedUserIndicators = [
-        'não podem realizar novas tentativas',
-        'não pode realizar novas tentativas',
-        'não pode tentar novamente',
-        'não podem tentar novamente',
-        'não é possível realizar novas tentativas',
+      'não podem realizar novas tentativas',
+      'não pode realizar novas tentativas',
+      'não pode tentar novamente',
+      'não podem tentar novamente',
+      'não é possível realizar novas tentativas',
     ];
 
-    const mentionsBlockedBehavior =
-      blockedUserIndicators.some((indicator) =>
-        answer.includes(indicator),
-      );
+    const mentionsBlockedBehavior = blockedUserIndicators.some((indicator) =>
+      answer.includes(indicator)
+    );
 
     expect(mentionsBlockedBehavior).toBeTruthy();
   });

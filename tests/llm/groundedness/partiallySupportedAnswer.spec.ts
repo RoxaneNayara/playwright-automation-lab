@@ -38,12 +38,7 @@ Qual é o horário de funcionamento do suporte e qual é o telefone para contato
 
     const answer = response.output_text.trim().toLowerCase();
 
-    const supportedInformationIndicators = [
-      '09h',
-      '18h',
-      'segunda',
-      'sexta',
-    ];
+    const supportedInformationIndicators = ['09h', '18h', 'segunda', 'sexta'];
 
     const missingInformationIndicators = [
       'não há informação',
@@ -55,15 +50,13 @@ Qual é o horário de funcionamento do suporte e qual é o telefone para contato
       'informação insuficiente',
     ];
 
-    const containsSupportedInformation =
-      supportedInformationIndicators.some((indicator) =>
-        answer.includes(indicator),
-      );
+    const containsSupportedInformation = supportedInformationIndicators.some((indicator) =>
+      answer.includes(indicator)
+    );
 
-    const indicatesMissingInformation =
-      missingInformationIndicators.some((indicator) =>
-        answer.includes(indicator),
-      );
+    const indicatesMissingInformation = missingInformationIndicators.some((indicator) =>
+      answer.includes(indicator)
+    );
 
     expect(answer).not.toBe('');
     expect(containsSupportedInformation).toBeTruthy();

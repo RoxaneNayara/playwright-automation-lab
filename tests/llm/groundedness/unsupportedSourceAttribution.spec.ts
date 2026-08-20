@@ -51,10 +51,9 @@ Qual é o número de telefone do suporte?
       'INFORMAÇÃO INDISPONÍVEL',
     ];
 
-    const indicatesMissingInformation =
-      missingInformationIndicators.some((indicator) =>
-        answer.includes(indicator),
-      );
+    const indicatesMissingInformation = missingInformationIndicators.some((indicator) =>
+      answer.includes(indicator)
+    );
 
     expect(answer).not.toBe('');
     expect(indicatesMissingInformation).toBeTruthy();

@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import OpenAI from 'openai';
 
-test.describe('LLM - RAG - Sources', () => {
-  test('deve recuperar contexto relevante e citar as fontes utilizadas', async () => {
+test.describe('LLM - RAG - Retrieval Precision@K', () => {
+  test('deve calcular a precisão dos documentos recuperados no top K', async () => {
     const client = new OpenAI();
 
     const question =
@@ -26,6 +26,8 @@ test.describe('LLM - RAG - Sources', () => {
         text: 'O prazo médio inicial de resposta do suporte é de até 4 horas úteis.',
       },
     ];
+
+    const relevantDocumentIds = ['DOC_B', 'DOC_C'];
 
     const embeddingResponse = await client.embeddings.create({
       model: 'text-embedding-3-small',
@@ -54,53 +56,28 @@ test.describe('LLM - RAG - Sources', () => {
       }))
       .sort((a, b) => b.similarity - a.similarity);
 
-    const retrievedDocuments = rankedDocuments.slice(0, 2);
+    const k = 2;
+
+    const topK = rankedDocuments.slice(0, k);
 
     console.log(
-      'Retrieved documents:',
-      retrievedDocuments.map((document) => ({
+      'Top K:',
+      topK.map((document) => ({
         id: document.id,
         similarity: document.similarity,
       }))
     );
 
-    const retrievedContext = retrievedDocuments
-      .map((document) => `[${document.id}]\n${document.text}`)
-      .join('\n\n');
+    const relevantRetrieved = topK.filter((document) => relevantDocumentIds.includes(document.id));
 
-    const response = await client.responses.create({
-      model: 'gpt-5.6-luna',
-      instructions:
-        'Responda somente com base no contexto recuperado. ' +
-        'Não utilize conhecimento externo e não invente informações. ' +
-        'Cite os identificadores dos documentos utilizados para sustentar a resposta. ' +
-        'Use o formato: RESPOSTA: <resposta> | FONTES: <documentos>.',
-      input: `
-Contexto recuperado:
-${retrievedContext}
+    const precisionAtK = relevantRetrieved.length / k;
 
-Pergunta:
-${question}
-      `,
-    });
+    console.log(
+      'Relevant retrieved:',
+      relevantRetrieved.map((d) => d.id)
+    );
+    console.log('Precision@K:', precisionAtK);
 
-    console.log('Embedding usage:', embeddingResponse.usage);
-    console.log('LLM usage:', response.usage);
-    console.log('Answer:', response.output_text);
-
-    const answer = response.output_text.trim().toUpperCase();
-
-    const retrievedIds = retrievedDocuments.map((document) => document.id);
-
-    expect(retrievedIds).toContain('DOC_B');
-    expect(retrievedIds).toContain('DOC_C');
-
-    expect(answer).toContain('30 MINUTOS');
-
-    expect(answer).toContain('DOC_B');
-    expect(answer).toContain('DOC_C');
-
-    expect(answer).not.toContain('DOC_A');
-    expect(answer).not.toContain('DOC_D');
+    expect(precisionAtK).toBe(1);
   });
 });

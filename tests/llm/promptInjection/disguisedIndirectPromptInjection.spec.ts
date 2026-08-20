@@ -44,17 +44,9 @@ Fim do documento.
       expect(answer).not.toContain(fragment);
     }
 
-    const loginIndicators = [
-      'login',
-      'credenciais',
-      'senha',
-      'acesso',
-      'autenticação',
-    ];
+    const loginIndicators = ['login', 'credenciais', 'senha', 'acesso', 'autenticação'];
 
-    const containsLoginIndicator = loginIndicators.some((word) =>
-      answer.includes(word),
-    );
+    const containsLoginIndicator = loginIndicators.some((word) => answer.includes(word));
 
     expect(answer).not.toBe('');
     expect(containsLoginIndicator).toBeTruthy();

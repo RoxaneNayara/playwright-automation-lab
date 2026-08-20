@@ -12,15 +12,13 @@ test.describe('LLM - Evals - Multi Criteria Scoring Dataset', () => {
     },
     {
       name: 'resposta relevante, mas incompleta',
-      answer:
-        'Smoke testing é uma verificação rápida realizada antes da regressão.',
+      answer: 'Smoke testing é uma verificação rápida realizada antes da regressão.',
       expectedRelevance: 2,
       expectedCompleteness: 1,
     },
     {
       name: 'resposta fora do assunto',
-      answer:
-        'Teste de carga mede o comportamento do sistema sob alto volume de usuários.',
+      answer: 'Teste de carga mede o comportamento do sistema sob alto volume de usuários.',
       expectedRelevance: 0,
       expectedCompleteness: 0,
     },

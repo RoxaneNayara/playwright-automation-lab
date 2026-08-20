@@ -1,12 +1,46 @@
 import { test, expect } from '@playwright/test';
 import OpenAI from 'openai';
 
-test.describe('LLM - RAG - Sources', () => {
-  test('deve recuperar contexto relevante e citar as fontes utilizadas', async () => {
+const buildSafeAnswer = async (
+  client: OpenAI,
+  question: string,
+  relevantDocuments: Array<{
+    id: string;
+    text: string;
+    similarity: number;
+  }>
+): Promise<string> => {
+  if (relevantDocuments.length === 0) {
+    return 'Não há contexto suficiente para responder com segurança.';
+  }
+
+  const retrievedContext = relevantDocuments
+    .map((document) => `[${document.id}]\n${document.text}`)
+    .join('\n\n');
+
+  const response = await client.responses.create({
+    model: 'gpt-5.6-luna',
+    instructions:
+      'Responda somente com base no contexto recuperado. ' +
+      'Não utilize conhecimento externo e não invente informações.',
+    input: `
+Contexto recuperado:
+${retrievedContext}
+
+Pergunta:
+${question}
+    `,
+  });
+
+  return response.output_text.trim();
+};
+
+test.describe('LLM - RAG - Safe Fallback', () => {
+  test('deve retornar fallback seguro quando nenhum documento atingir relevância mínima', async () => {
     const client = new OpenAI();
 
     const question =
-      'O que acontece após cinco tentativas inválidas e por quanto tempo a conta fica bloqueada?';
+      'Qual é a política de reembolso para compras realizadas com cartão de crédito?';
 
     const documents = [
       {
@@ -54,53 +88,26 @@ test.describe('LLM - RAG - Sources', () => {
       }))
       .sort((a, b) => b.similarity - a.similarity);
 
-    const retrievedDocuments = rankedDocuments.slice(0, 2);
-
     console.log(
-      'Retrieved documents:',
-      retrievedDocuments.map((document) => ({
+      'Ranking:',
+      rankedDocuments.map((document) => ({
         id: document.id,
         similarity: document.similarity,
       }))
     );
 
-    const retrievedContext = retrievedDocuments
-      .map((document) => `[${document.id}]\n${document.text}`)
-      .join('\n\n');
+    const similarityThreshold = 0.6;
 
-    const response = await client.responses.create({
-      model: 'gpt-5.6-luna',
-      instructions:
-        'Responda somente com base no contexto recuperado. ' +
-        'Não utilize conhecimento externo e não invente informações. ' +
-        'Cite os identificadores dos documentos utilizados para sustentar a resposta. ' +
-        'Use o formato: RESPOSTA: <resposta> | FONTES: <documentos>.',
-      input: `
-Contexto recuperado:
-${retrievedContext}
+    const relevantDocuments = rankedDocuments.filter(
+      (document) => document.similarity >= similarityThreshold
+    );
 
-Pergunta:
-${question}
-      `,
-    });
+    const finalAnswer = await buildSafeAnswer(client, question, relevantDocuments);
 
-    console.log('Embedding usage:', embeddingResponse.usage);
-    console.log('LLM usage:', response.usage);
-    console.log('Answer:', response.output_text);
+    console.log('Final answer:', finalAnswer);
 
-    const answer = response.output_text.trim().toUpperCase();
+    expect(relevantDocuments).toHaveLength(0);
 
-    const retrievedIds = retrievedDocuments.map((document) => document.id);
-
-    expect(retrievedIds).toContain('DOC_B');
-    expect(retrievedIds).toContain('DOC_C');
-
-    expect(answer).toContain('30 MINUTOS');
-
-    expect(answer).toContain('DOC_B');
-    expect(answer).toContain('DOC_C');
-
-    expect(answer).not.toContain('DOC_A');
-    expect(answer).not.toContain('DOC_D');
+    expect(finalAnswer).toBe('Não há contexto suficiente para responder com segurança.');
   });
 });

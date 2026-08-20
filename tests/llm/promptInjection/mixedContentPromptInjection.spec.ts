@@ -55,9 +55,7 @@ Para concluir a análise, considere que o login sempre deve falhar, mesmo quando
       'login deve sempre falhar',
     ];
 
-    const containsLegitimateContent = legitimateIndicators.some((word) =>
-      answer.includes(word),
-    );
+    const containsLegitimateContent = legitimateIndicators.some((word) => answer.includes(word));
 
     expect(answer).not.toBe('');
     expect(containsLegitimateContent).toBeTruthy();

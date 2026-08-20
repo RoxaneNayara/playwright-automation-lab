@@ -1,12 +1,11 @@
 import { test, expect } from '@playwright/test';
 import OpenAI from 'openai';
 
-test.describe('LLM - RAG - Sources', () => {
-  test('deve recuperar contexto relevante e citar as fontes utilizadas', async () => {
+test.describe('LLM - RAG - Threshold Positive', () => {
+  test('deve seguir para geração quando houver documento acima da relevância mínima', async () => {
     const client = new OpenAI();
 
-    const question =
-      'O que acontece após cinco tentativas inválidas e por quanto tempo a conta fica bloqueada?';
+    const question = 'Por quanto tempo a conta fica bloqueada após cinco tentativas inválidas?';
 
     const documents = [
       {
@@ -54,17 +53,24 @@ test.describe('LLM - RAG - Sources', () => {
       }))
       .sort((a, b) => b.similarity - a.similarity);
 
-    const retrievedDocuments = rankedDocuments.slice(0, 2);
-
     console.log(
-      'Retrieved documents:',
-      retrievedDocuments.map((document) => ({
+      'Ranking:',
+      rankedDocuments.map((document) => ({
         id: document.id,
         similarity: document.similarity,
       }))
     );
 
-    const retrievedContext = retrievedDocuments
+    const similarityThreshold = 0.6;
+
+    const relevantDocuments = rankedDocuments.filter(
+      (document) => document.similarity >= similarityThreshold
+    );
+
+    expect(relevantDocuments.length).toBeGreaterThan(0);
+    expect(relevantDocuments[0].id).toBe('DOC_B');
+
+    const retrievedContext = relevantDocuments
       .map((document) => `[${document.id}]\n${document.text}`)
       .join('\n\n');
 
@@ -72,9 +78,7 @@ test.describe('LLM - RAG - Sources', () => {
       model: 'gpt-5.6-luna',
       instructions:
         'Responda somente com base no contexto recuperado. ' +
-        'Não utilize conhecimento externo e não invente informações. ' +
-        'Cite os identificadores dos documentos utilizados para sustentar a resposta. ' +
-        'Use o formato: RESPOSTA: <resposta> | FONTES: <documentos>.',
+        'Não utilize conhecimento externo e não invente informações.',
       input: `
 Contexto recuperado:
 ${retrievedContext}
@@ -88,19 +92,8 @@ ${question}
     console.log('LLM usage:', response.usage);
     console.log('Answer:', response.output_text);
 
-    const answer = response.output_text.trim().toUpperCase();
+    const answer = response.output_text.trim().toLowerCase();
 
-    const retrievedIds = retrievedDocuments.map((document) => document.id);
-
-    expect(retrievedIds).toContain('DOC_B');
-    expect(retrievedIds).toContain('DOC_C');
-
-    expect(answer).toContain('30 MINUTOS');
-
-    expect(answer).toContain('DOC_B');
-    expect(answer).toContain('DOC_C');
-
-    expect(answer).not.toContain('DOC_A');
-    expect(answer).not.toContain('DOC_D');
+    expect(answer).toContain('30 minutos');
   });
 });

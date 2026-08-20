@@ -11,8 +11,7 @@ test.describe('LLM - Fundamentals - Semantic Scoring Dataset', () => {
     },
     {
       name: 'resposta parcialmente correta',
-      answer:
-        'Smoke testing é uma verificação rápida realizada antes da regressão.',
+      answer: 'Smoke testing é uma verificação rápida realizada antes da regressão.',
       expectedScore: 1,
     },
     {

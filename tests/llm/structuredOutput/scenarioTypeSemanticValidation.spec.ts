@@ -36,11 +36,7 @@ test.describe('LLM - Structured Output - Scenario Type Semantic Validation', () 
                       type: 'string',
                     },
                   },
-                  required: [
-                    'title',
-                    'scenarioType',
-                    'expectedResult',
-                  ],
+                  required: ['title', 'scenarioType', 'expectedResult'],
                   additionalProperties: false,
                 },
               },

@@ -5,8 +5,7 @@ test.describe('LLM - Embeddings - Semantic Ranking', () => {
   test('deve ordenar documentos do mais relevante ao menos relevante', async () => {
     const client = new OpenAI();
 
-    const question =
-      'Por quanto tempo a conta fica bloqueada após várias tentativas inválidas?';
+    const question = 'Por quanto tempo a conta fica bloqueada após várias tentativas inválidas?';
 
     const documents = [
       {
@@ -29,32 +28,19 @@ test.describe('LLM - Embeddings - Semantic Ranking', () => {
 
     const response = await client.embeddings.create({
       model: 'text-embedding-3-small',
-      input: [
-        question,
-        ...documents.map((document) => document.text),
-      ],
+      input: [question, ...documents.map((document) => document.text)],
     });
 
     console.log('Usage:', response.usage);
 
     const questionEmbedding = response.data[0].embedding;
 
-    const cosineSimilarity = (
-      vectorA: number[],
-      vectorB: number[],
-    ): number => {
-      const dotProduct = vectorA.reduce(
-        (sum, value, index) => sum + value * vectorB[index],
-        0,
-      );
+    const cosineSimilarity = (vectorA: number[], vectorB: number[]): number => {
+      const dotProduct = vectorA.reduce((sum, value, index) => sum + value * vectorB[index], 0);
 
-      const magnitudeA = Math.sqrt(
-        vectorA.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeA = Math.sqrt(vectorA.reduce((sum, value) => sum + value * value, 0));
 
-      const magnitudeB = Math.sqrt(
-        vectorB.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeB = Math.sqrt(vectorB.reduce((sum, value) => sum + value * value, 0));
 
       return dotProduct / (magnitudeA * magnitudeB);
     };
@@ -65,10 +51,7 @@ test.describe('LLM - Embeddings - Semantic Ranking', () => {
 
         return {
           id: document.id,
-          similarity: cosineSimilarity(
-            questionEmbedding,
-            documentEmbedding,
-          ),
+          similarity: cosineSimilarity(questionEmbedding, documentEmbedding),
         };
       })
       .sort((a, b) => b.similarity - a.similarity);
@@ -78,8 +61,6 @@ test.describe('LLM - Embeddings - Semantic Ranking', () => {
     expect(rankedDocuments).toHaveLength(4);
     expect(rankedDocuments[0].id).toBe('DOC_B');
 
-    expect(rankedDocuments[0].similarity).toBeGreaterThan(
-      rankedDocuments[1].similarity,
-    );
+    expect(rankedDocuments[0].similarity).toBeGreaterThan(rankedDocuments[1].similarity);
   });
 });

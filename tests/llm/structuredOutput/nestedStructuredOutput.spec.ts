@@ -66,9 +66,7 @@ test.describe('LLM - Structured Output - Nested Object', () => {
     expect(typeof result.testCase.title).toBe('string');
     expect(result.testCase.title.trim()).not.toBe('');
 
-    expect(['LOW', 'MEDIUM', 'HIGH']).toContain(
-      result.testCase.priority,
-    );
+    expect(['LOW', 'MEDIUM', 'HIGH']).toContain(result.testCase.priority);
 
     expect(typeof result.execution.automated).toBe('boolean');
 

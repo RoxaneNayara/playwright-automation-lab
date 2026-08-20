@@ -48,10 +48,9 @@ Qual é o endereço de e-mail do suporte do Quality Portal?
       'informações insuficientes',
     ];
 
-    const indicatesMissingInformation =
-      missingInformationIndicators.some((indicator) =>
-        answer.includes(indicator),
-      );
+    const indicatesMissingInformation = missingInformationIndicators.some((indicator) =>
+      answer.includes(indicator)
+    );
 
     expect(answer).not.toBe('');
     expect(indicatesMissingInformation).toBeTruthy();

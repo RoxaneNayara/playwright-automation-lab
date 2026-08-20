@@ -17,10 +17,10 @@ test.describe('LLM - Structured Output - Basic', () => {
           schema: {
             type: 'object',
             properties: {
-            area: {
+              area: {
                 type: 'string',
                 enum: ['QA'],
-                },
+              },
               priority: {
                 type: 'string',
                 enum: ['LOW', 'MEDIUM', 'HIGH'],

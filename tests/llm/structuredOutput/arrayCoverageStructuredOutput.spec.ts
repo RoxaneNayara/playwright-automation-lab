@@ -40,12 +40,7 @@ test.describe('LLM - Structured Output - Array Coverage', () => {
                       type: 'string',
                     },
                   },
-                  required: [
-                    'title',
-                    'scenarioType',
-                    'priority',
-                    'expectedResult',
-                  ],
+                  required: ['title', 'scenarioType', 'priority', 'expectedResult'],
                   additionalProperties: false,
                 },
               },
@@ -65,7 +60,7 @@ test.describe('LLM - Structured Output - Array Coverage', () => {
     expect(result.testCases).toHaveLength(3);
 
     const scenarioTypes = result.testCases.map(
-      (testCase: { scenarioType: string }) => testCase.scenarioType,
+      (testCase: { scenarioType: string }) => testCase.scenarioType
     );
 
     expect(scenarioTypes).toContain('POSITIVE');

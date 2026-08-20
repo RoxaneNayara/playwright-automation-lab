@@ -5,8 +5,7 @@ test.describe('LLM - Fundamentals - Semantic Scoring', () => {
   test('deve pontuar a completude de uma resposta parcialmente correta', async () => {
     const client = new OpenAI();
 
-    const answerToEvaluate =
-      'Smoke testing é uma verificação rápida realizada antes da regressão.';
+    const answerToEvaluate = 'Smoke testing é uma verificação rápida realizada antes da regressão.';
 
     const response = await client.responses.create({
       model: 'gpt-5.6-luna',

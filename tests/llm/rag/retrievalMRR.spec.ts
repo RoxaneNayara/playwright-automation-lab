@@ -1,12 +1,19 @@
 import { test, expect } from '@playwright/test';
 import OpenAI from 'openai';
 
-test.describe('LLM - RAG - Sources', () => {
-  test('deve recuperar contexto relevante e citar as fontes utilizadas', async () => {
+const calculateReciprocalRank = (firstRelevantIndex: number): number => {
+  if (firstRelevantIndex === -1) {
+    return 0;
+  }
+
+  return 1 / (firstRelevantIndex + 1);
+};
+
+test.describe('LLM - RAG - Retrieval MRR', () => {
+  test('deve calcular o reciprocal rank do primeiro documento relevante', async () => {
     const client = new OpenAI();
 
-    const question =
-      'O que acontece após cinco tentativas inválidas e por quanto tempo a conta fica bloqueada?';
+    const question = 'Por quanto tempo a conta fica bloqueada após cinco tentativas inválidas?';
 
     const documents = [
       {
@@ -26,6 +33,8 @@ test.describe('LLM - RAG - Sources', () => {
         text: 'O prazo médio inicial de resposta do suporte é de até 4 horas úteis.',
       },
     ];
+
+    const relevantDocumentIds = ['DOC_B', 'DOC_C'];
 
     const embeddingResponse = await client.embeddings.create({
       model: 'text-embedding-3-small',
@@ -54,53 +63,26 @@ test.describe('LLM - RAG - Sources', () => {
       }))
       .sort((a, b) => b.similarity - a.similarity);
 
-    const retrievedDocuments = rankedDocuments.slice(0, 2);
-
     console.log(
-      'Retrieved documents:',
-      retrievedDocuments.map((document) => ({
+      'Ranking:',
+      rankedDocuments.map((document, index) => ({
+        position: index + 1,
         id: document.id,
         similarity: document.similarity,
       }))
     );
 
-    const retrievedContext = retrievedDocuments
-      .map((document) => `[${document.id}]\n${document.text}`)
-      .join('\n\n');
+    const firstRelevantIndex = rankedDocuments.findIndex((document) =>
+      relevantDocumentIds.includes(document.id)
+    );
 
-    const response = await client.responses.create({
-      model: 'gpt-5.6-luna',
-      instructions:
-        'Responda somente com base no contexto recuperado. ' +
-        'Não utilize conhecimento externo e não invente informações. ' +
-        'Cite os identificadores dos documentos utilizados para sustentar a resposta. ' +
-        'Use o formato: RESPOSTA: <resposta> | FONTES: <documentos>.',
-      input: `
-Contexto recuperado:
-${retrievedContext}
+    const reciprocalRank = calculateReciprocalRank(firstRelevantIndex);
 
-Pergunta:
-${question}
-      `,
-    });
+    console.log('First relevant position:', firstRelevantIndex + 1);
 
-    console.log('Embedding usage:', embeddingResponse.usage);
-    console.log('LLM usage:', response.usage);
-    console.log('Answer:', response.output_text);
+    console.log('Reciprocal Rank:', reciprocalRank);
 
-    const answer = response.output_text.trim().toUpperCase();
-
-    const retrievedIds = retrievedDocuments.map((document) => document.id);
-
-    expect(retrievedIds).toContain('DOC_B');
-    expect(retrievedIds).toContain('DOC_C');
-
-    expect(answer).toContain('30 MINUTOS');
-
-    expect(answer).toContain('DOC_B');
-    expect(answer).toContain('DOC_C');
-
-    expect(answer).not.toContain('DOC_A');
-    expect(answer).not.toContain('DOC_D');
+    expect(firstRelevantIndex).toBeGreaterThanOrEqual(0);
+    expect(reciprocalRank).toBe(1);
   });
 });

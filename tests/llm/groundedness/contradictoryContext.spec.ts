@@ -49,8 +49,8 @@ Por quanto tempo a conta fica bloqueada após cinco tentativas inválidas?
       'não há uma resposta única',
     ];
 
-    const identifiesContradiction = contradictionIndicators.some(
-      (indicator) => answer.includes(indicator),
+    const identifiesContradiction = contradictionIndicators.some((indicator) =>
+      answer.includes(indicator)
     );
 
     expect(answer).not.toBe('');

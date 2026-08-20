@@ -56,9 +56,7 @@ test.describe('LLM - Structured Output - Complex', () => {
     expect(result.testTypes.length).toBeGreaterThan(0);
 
     for (const testType of result.testTypes) {
-      expect(['FUNCTIONAL', 'SMOKE', 'REGRESSION', 'SECURITY']).toContain(
-        testType,
-      );
+      expect(['FUNCTIONAL', 'SMOKE', 'REGRESSION', 'SECURITY']).toContain(testType);
     }
   });
 });

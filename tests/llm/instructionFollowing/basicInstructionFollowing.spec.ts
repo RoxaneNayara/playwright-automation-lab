@@ -7,8 +7,7 @@ test.describe('LLM - Instruction Following - Basic', () => {
 
     const response = await client.responses.create({
       model: 'gpt-5.6-luna',
-      instructions:
-        'Responda obrigatoriamente em português e use no máximo 10 palavras.',
+      instructions: 'Responda obrigatoriamente em português e use no máximo 10 palavras.',
       input: 'Explique o objetivo do smoke testing.',
     });
 
@@ -17,27 +16,23 @@ test.describe('LLM - Instruction Following - Basic', () => {
 
     const answer = response.output_text.trim();
 
-    const wordCount = answer
-      .split(/\s+/)
-      .filter((word) => word.length > 0)
-      .length;
+    const wordCount = answer.split(/\s+/).filter((word) => word.length > 0).length;
 
-      const portugueseIndicators = [
-        'verificar',
-        'funcionalidades',
-        'essenciais',
-        'funcionam',
-        'antes',
-        'testes',
-        ];
+    const portugueseIndicators = [
+      'verificar',
+      'funcionalidades',
+      'essenciais',
+      'funcionam',
+      'antes',
+      'testes',
+    ];
 
-        const containsPortugueseIndicator = portugueseIndicators.some((word) =>
-        answer.toLowerCase().includes(word),
-        );
+    const containsPortugueseIndicator = portugueseIndicators.some((word) =>
+      answer.toLowerCase().includes(word)
+    );
 
     expect(answer).not.toBe('');
     expect(wordCount).toBeLessThanOrEqual(10);
     expect(containsPortugueseIndicator).toBeTruthy();
   });
-  
 });

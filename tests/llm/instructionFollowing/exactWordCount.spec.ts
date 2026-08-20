@@ -7,8 +7,7 @@ test.describe('LLM - Instruction Following - Exact Word Count', () => {
 
     const response = await client.responses.create({
       model: 'gpt-5.6-luna',
-      instructions:
-        'Responda obrigatoriamente em português usando exatamente 5 palavras.',
+      instructions: 'Responda obrigatoriamente em português usando exatamente 5 palavras.',
       input: 'Explique o objetivo do smoke testing.',
     });
 
@@ -17,10 +16,7 @@ test.describe('LLM - Instruction Following - Exact Word Count', () => {
 
     const answer = response.output_text.trim();
 
-    const wordCount = answer
-      .split(/\s+/)
-      .filter((word) => word.length > 0)
-      .length;
+    const wordCount = answer.split(/\s+/).filter((word) => word.length > 0).length;
 
     expect(answer).not.toBe('');
     expect(wordCount).toBe(5);

@@ -35,11 +35,7 @@ test.describe('LLM - Structured Output - Array of Objects', () => {
                       type: 'string',
                     },
                   },
-                  required: [
-                    'title',
-                    'priority',
-                    'expectedResult',
-                  ],
+                  required: ['title', 'priority', 'expectedResult'],
                   additionalProperties: false,
                 },
               },
@@ -63,9 +59,7 @@ test.describe('LLM - Structured Output - Array of Objects', () => {
       expect(typeof testCase.title).toBe('string');
       expect(testCase.title.trim()).not.toBe('');
 
-      expect(['LOW', 'MEDIUM', 'HIGH']).toContain(
-        testCase.priority,
-      );
+      expect(['LOW', 'MEDIUM', 'HIGH']).toContain(testCase.priority);
 
       expect(typeof testCase.expectedResult).toBe('string');
       expect(testCase.expectedResult.trim()).not.toBe('');

@@ -22,35 +22,19 @@ test.describe('LLM - Embeddings - Semantic Similarity', () => {
     const invalidCredentialsEmbedding = response.data[1].embedding;
     const deliveryEmbedding = response.data[2].embedding;
 
-    const cosineSimilarity = (
-      vectorA: number[],
-      vectorB: number[],
-    ): number => {
-      const dotProduct = vectorA.reduce(
-        (sum, value, index) => sum + value * vectorB[index],
-        0,
-      );
+    const cosineSimilarity = (vectorA: number[], vectorB: number[]): number => {
+      const dotProduct = vectorA.reduce((sum, value, index) => sum + value * vectorB[index], 0);
 
-      const magnitudeA = Math.sqrt(
-        vectorA.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeA = Math.sqrt(vectorA.reduce((sum, value) => sum + value * value, 0));
 
-      const magnitudeB = Math.sqrt(
-        vectorB.reduce((sum, value) => sum + value * value, 0),
-      );
+      const magnitudeB = Math.sqrt(vectorB.reduce((sum, value) => sum + value * value, 0));
 
       return dotProduct / (magnitudeA * magnitudeB);
     };
 
-    const relatedSimilarity = cosineSimilarity(
-      loginFailureEmbedding,
-      invalidCredentialsEmbedding,
-    );
+    const relatedSimilarity = cosineSimilarity(loginFailureEmbedding, invalidCredentialsEmbedding);
 
-    const unrelatedSimilarity = cosineSimilarity(
-      loginFailureEmbedding,
-      deliveryEmbedding,
-    );
+    const unrelatedSimilarity = cosineSimilarity(loginFailureEmbedding, deliveryEmbedding);
 
     console.log('Related similarity:', relatedSimilarity);
     console.log('Unrelated similarity:', unrelatedSimilarity);
