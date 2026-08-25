@@ -101,6 +101,7 @@ ${question}
       'não pode tentar novamente',
       'não podem tentar novamente',
       'não é possível realizar novas tentativas',
+      'não permite novas tentativas',
     ];
 
     const mentionsBlockedBehavior = blockedUserIndicators.some((indicator) =>
