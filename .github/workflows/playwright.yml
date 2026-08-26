@@ -42,6 +42,16 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Run LLM CI quality gates
+        run: |
+          npx playwright test \
+            tests/llm/regression/regressionGuard.spec.ts \
+            tests/llm/regression/modelRegressionGuard.spec.ts \
+            tests/llm/observability/costBudgetGuard.spec.ts \
+            --project=llm
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
       - name: Run cross-browser tests
         run: npm run test:cross-browser
 
