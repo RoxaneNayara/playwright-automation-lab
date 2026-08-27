@@ -218,15 +218,23 @@ Resultados obtidos em cenários controlados não devem ser interpretados como ga
 
 ## Release atual
 
-A release publicada **v1.0.0 — Automação Web** reúne 23 cenários automatizados e 69 execuções cross-browser.
+A release atual é a **v2.0.0 — Expansão do Laboratório: API, LLM e CI Quality Gates**.
 
-[Ver detalhes da release v1.0.0](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v1.0.0)
+Ela consolida a evolução do projeto para além da automação Web, incluindo:
 
-Desde essa release, o laboratório também evoluiu com trilhas de **API e testes de sistemas com LLM**, ainda não consolidadas em uma nova release versionada.
+- testes de API;
+- trilha de testes de sistemas com LLM;
+- Agents e Tool Calling;
+- RAG, evals, regressão e observabilidade;
+- quality gates de LLM no GitHub Actions;
+- evolução dos controles de qualidade e CI/CD.
+
+[Ver detalhes da release v2.0.0](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v2.0.0)
+
+A release anterior **v1.0.0 — Automação Web** permanece como marco inicial da consolidação da trilha Web.
 
 ## Próximas evoluções
 
-- consolidar a próxima release do laboratório;
 - evoluir a arquitetura reutilizável de API;
 - ampliar datasets de avaliação LLM;
 - externalizar datasets e critérios compartilhados;
