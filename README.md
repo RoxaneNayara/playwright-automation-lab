@@ -15,124 +15,93 @@
   </a>
 </p>
 
+# Playwright Automation Lab
+
 ## Sobre o projeto
 
-Laboratório de automação de testes desenvolvido com **Playwright** e **TypeScript**, criado para estudos, experimentação e demonstração de boas práticas em qualidade de software.
+O **Playwright Automation Lab** é um laboratório de estudos e experimentação em automação de testes desenvolvido com **Playwright** e **TypeScript**.
 
-O projeto reúne automação Web, testes de API e uma trilha dedicada à qualidade de sistemas baseados em **LLMs**, incluindo testes funcionais, cenários end-to-end, validações de regras de negócio, robustez, acessibilidade, RAG, embeddings, evals, prompt injection, tool calling, regressão, observabilidade, controle de custo e integração contínua.
+O projeto foi criado para explorar diferentes frentes de qualidade de software de forma organizada, prática e incremental, reunindo automação **Web**, testes de **API** e uma trilha dedicada a **sistemas com LLM**.
 
-O objetivo não é apenas validar respostas, mas estudar como diferentes características de qualidade podem ser testadas de forma automatizada e reproduzível.
+Mais do que acumular cenários, o laboratório busca estudar como estruturar testes, avaliar comportamento, controlar riscos, medir qualidade e integrar verificações automatizadas ao fluxo de engenharia.
 
-## Status do projeto
+## Como o projeto foi pensado
 
-### Web
+O laboratório foi organizado em trilhas independentes para preservar clareza, responsabilidade e evolução técnica.
 
-- 23 cenários automatizados;
-- 69 execuções cross-browser;
-- Chromium, Firefox e WebKit;
-- TodoMVC e SauceDemo;
-- acessibilidade automatizada com Axe Core.
+Cada trilha possui objetivos próprios, mas compartilha os mesmos princípios de engenharia:
 
-### API
+- testes legíveis e com intenção clara;
+- separação entre fluxo, dados e validação;
+- automação como apoio à estratégia de qualidade;
+- critérios de aprovação explícitos;
+- preocupação com manutenção, confiabilidade e custo;
+- uso de CI/CD como mecanismo de feedback contínuo.
 
-- 16 cenários automatizados;
+O projeto também diferencia **exemplos de estudo**, **provas de conceito** e **padrões que podem servir como referência**, evitando tratar experimentos como soluções prontas para produção.
+
+## Trilhas do laboratório
+
+### Automação Web
+
+A trilha Web utiliza **TodoMVC** e **SauceDemo** para estudar:
+
+- jornadas funcionais e end-to-end;
+- regras de negócio;
+- Page Object Model;
+- flows reutilizáveis;
+- smoke tests;
+- acessibilidade automatizada;
+- execução cross-browser em Chromium, Firefox e WebKit.
+
+A suíte Web possui **23 cenários automatizados** e **69 execuções cross-browser**.
+
+### Testes de API
+
+A trilha de API utiliza a **DummyJSON API** como aplicação pública independente do laboratório.
+
+Os cenários exploram:
+
 - operações CRUD;
 - busca e paginação;
 - cenários negativos;
-- testes de robustez;
-- validação de comportamento de API pública.
+- robustez de entrada;
+- validação de estrutura e comportamento;
+- limites e dados inválidos;
+- respostas observadas em operações simuladas.
 
-### LLM
+A suíte de API possui **16 cenários automatizados**.
 
-A trilha de testes de LLM cobre:
+### Testes de sistemas com LLM
 
-- fundamentos de interação com modelos;
-- structured output;
-- instruction following;
-- validação de respostas;
+A trilha LLM foi construída de forma progressiva, partindo de fundamentos até cenários de avaliação, segurança e governança.
+
+Os estudos incluem:
+
+- interação com modelos e structured output;
+- instruction following e validação de respostas;
+- embeddings, similaridade semântica e retrieval;
+- RAG, múltiplas fontes, thresholds e safe fallback;
+- métricas de retrieval e evals;
+- groundedness e source attribution;
 - prompt injection;
-- groundedness;
-- embeddings e similaridade semântica;
-- semantic ranking e Top-K retrieval;
-- RAG manual e com múltiplas fontes;
-- thresholds e safe fallback;
-- métricas de retrieval;
-- RAG evals;
-- answer correctness;
-- answer relevance;
-- faithfulness;
-- context relevance;
-- regression testing;
-- model comparison;
-- quality guards;
-- observabilidade;
-- tokens, latência e custo;
-- budget guards;
+- regression testing e model comparison;
+- observabilidade de tokens, latência e custo;
+- quality guards e budget guards;
 - Agents e Tool Calling;
 - segurança contra Tool Injection;
 - preparação e avaliação de Fine-tuning.
 
-### Engenharia e CI
-
-- ESLint;
-- Prettier;
-- TypeScript;
-- Playwright HTML Report;
-- Allure Report;
-- GitHub Actions;
-- quality gates para testes de LLM;
-- execução automatizada da suíte cross-browser.
-
-## Aplicações e serviços utilizados
-
-### TodoMVC
-
-Aplicação utilizada para praticar operações básicas de uma lista de tarefas, com cenários de criação, conclusão, exclusão e atualização da lista.
-
-### SauceDemo
-
-Aplicação de demonstração de e-commerce utilizada para automatizar jornadas de login, catálogo, carrinho, checkout, regras financeiras e acessibilidade.
-
-### DummyJSON API
-
-API pública utilizada para estudos de automação de testes de API com Playwright.
-
-A suíte cobre operações CRUD, busca, paginação, cenários negativos e testes de robustez envolvendo campos ausentes, valores vazios ou nulos, tipos incorretos, preços negativos, textos extensos, caracteres especiais e Content-Type incompatível.
-
-As operações de escrita da DummyJSON são simuladas e não persistem os dados. Por isso, os testes validam status HTTP, estrutura da resposta, dados retornados e comportamento observado, sem afirmar persistência real.
-
-### OpenAI API
-
-Utilizada na trilha experimental de testes de sistemas com LLM.
-
-Os cenários exploram geração de respostas, embeddings, RAG, evals, tool calling, model comparison, regressão, observabilidade e preparação para fine-tuning.
-
-Os testes que dependem da API utilizam chave configurada por variável de ambiente e secret no GitHub Actions. Nenhuma chave é armazenada no repositório.
-
-## Tecnologias e ferramentas
-
-- Node.js
-- TypeScript
-- Playwright
-- Playwright Test
-- OpenAI SDK
-- OpenAI API
-- Axe Core
-- Allure Report
-- ESLint
-- Prettier
-- Git
-- GitHub Actions
+Os thresholds, datasets e critérios usados nessa trilha são **experimentais** e foram definidos para fins de estudo.
 
 ## Arquitetura do projeto
 
-O projeto separa as trilhas de Web, API e LLM para preservar responsabilidade, organização e evolução independente.
+O repositório mantém separação clara entre Web, API e LLM.
 
 ```text
 playwright-automation-lab
 ├── .github
 │   └── workflows
-│       └── playwright.yml
 ├── config
 ├── docs
 ├── src
@@ -143,14 +112,6 @@ playwright-automation-lab
 │       └── support
 ├── tests
 │   ├── api
-│   │   └── dummyJson
-│   │       └── products
-│   │           ├── atualizar
-│   │           ├── buscar
-│   │           ├── criar
-│   │           │   └── robustez
-│   │           ├── excluir
-│   │           └── listar
 │   ├── llm
 │   │   ├── agents
 │   │   ├── embeddings
@@ -162,7 +123,6 @@ playwright-automation-lab
 │   │   ├── observability
 │   │   ├── promptInjection
 │   │   ├── rag
-│   │   │   └── evals
 │   │   ├── regression
 │   │   ├── structuredOutput
 │   │   └── validation
@@ -176,368 +136,83 @@ playwright-automation-lab
 └── tsconfig.json
 ```
 
-## Automação Web
+## Qualidade e engenharia
 
-### Page Object Model
+O laboratório utiliza controles de qualidade de código e automação para reduzir inconsistências e manter a suíte sustentável.
 
-Os elementos e comportamentos das páginas ficam centralizados em classes de página, reduzindo duplicação e mantendo os testes focados nas regras validadas.
+Principais componentes:
 
-### Flows
+- **Playwright Test** para execução e organização dos cenários;
+- **TypeScript** para tipagem e manutenção;
+- **ESLint** para análise estática;
+- **Prettier** para padronização de estilo;
+- **Axe Core** para acessibilidade automatizada;
+- **Playwright HTML Report** e **Allure** para evidências e análise;
+- **GitHub Actions** para integração contínua;
+- **OpenAI SDK** para cenários experimentais com LLM.
 
-Fluxos reutilizáveis agrupam sequências de ações realizadas em diferentes testes, sem esconder as validações.
+## CI/CD
 
-### Dados de teste
+O GitHub Actions funciona como uma camada de qualidade do projeto.
 
-Credenciais, produtos e informações de checkout ficam separados dos testes para facilitar manutenção e reutilização.
-
-## Testes de API
-
-A trilha de API utiliza Playwright Request para validar comportamento de endpoints públicos.
-
-Os cenários incluem:
-
-- operações CRUD;
-- busca;
-- paginação;
-- dados inválidos;
-- campos ausentes;
-- valores nulos;
-- tipos incorretos;
-- limites e entradas extensas;
-- caracteres especiais;
-- Content-Type incompatível;
-- comportamento observado de uma API que simula operações de escrita.
-
-## Testes de sistemas com LLM
-
-A trilha LLM foi construída progressivamente, partindo de chamadas básicas até cenários de avaliação, segurança e governança.
-
-### Embeddings e Retrieval
-
-Os testes exploram:
-
-- geração de embeddings;
-- similaridade semântica;
-- cosine similarity;
-- semantic ranking;
-- Top-K retrieval.
-
-### RAG
-
-Os cenários de Retrieval-Augmented Generation validam:
-
-- recuperação manual de contexto;
-- múltiplas fontes;
-- source attribution;
-- thresholds de relevância;
-- ausência de contexto suficiente;
-- safe fallback;
-- respostas fundamentadas no contexto recuperado.
-
-### Métricas de Retrieval
-
-O laboratório implementa métricas para avaliar a qualidade da recuperação:
-
-- Precision@K;
-- Recall@K;
-- F1 Score;
-- Mean Reciprocal Rank — MRR;
-- nDCG.
-
-Também há avaliação agregada sobre datasets com múltiplas perguntas.
-
-Os thresholds utilizados são **critérios experimentais do laboratório** e não representam padrões universais de produção.
-
-### RAG Evals
-
-A qualidade da geração é avaliada por diferentes dimensões:
-
-- Answer Correctness;
-- Answer Relevance;
-- Faithfulness;
-- Context Relevance.
-
-Também há avaliação agregada de múltiplos casos.
-
-### Groundedness
-
-Os testes verificam situações como:
-
-- resposta totalmente sustentada;
-- ausência de informação;
-- contexto relacionado, porém insuficiente;
-- contexto contraditório;
-- respostas parcialmente sustentadas;
-- atribuição correta e incorreta de fontes.
-
-### Prompt Injection
-
-A suíte inclui cenários de:
-
-- prompt injection direto;
-- indirect prompt injection;
-- instruções maliciosas disfarçadas;
-- conteúdo legítimo misturado com instruções adversariais;
-- ataques fragmentados.
-
-### Regression e Model Comparison
-
-Os testes avaliam:
-
-- comparação entre modelos;
-- qualidade média em datasets;
-- latência;
-- consumo de tokens;
-- quality guards;
-- regressão individual;
-- regressão agregada.
-
-O objetivo é detectar deterioração de comportamento antes que uma alteração de modelo ou configuração seja aceita.
-
-### Observability
-
-A trilha mede:
-
-- input tokens;
-- output tokens;
-- total de tokens;
-- latência;
-- custo estimado por chamada;
-- custo agregado da suíte;
-- budget guard;
-- latency guard.
-
-Os valores de custo utilizados nos testes são parâmetros experimentais e devem ser atualizados conforme o modelo e a política de preços utilizados.
-
-### Agents e Tool Calling
-
-Os testes de Agents validam:
-
-- seleção da ferramenta correta;
-- argumentos enviados para a ferramenta;
-- situações em que nenhuma ferramenta é necessária;
-- ausência de parâmetros obrigatórios;
-- tratamento de erro da ferramenta;
-- grounding no retorno da ferramenta;
-- resistência a Tool Injection;
-- detecção de instruções maliciosas em retornos de ferramentas.
-
-Os cenários utilizam ferramentas simuladas para testar decisões e comportamento do agente sem executar operações bancárias ou serviços reais.
-
-### Fine-tuning
-
-A trilha de Fine-tuning cobre:
-
-- estrutura de datasets;
-- validação de exemplos de treinamento;
-- JSONL;
-- criação e leitura de arquivo temporário;
-- duplicidade;
-- cobertura de categorias;
-- distribuição mínima;
-- baseline evaluation;
-- challenging baseline;
-- decision gate;
-- thresholds de decisão;
-- upload real de dataset com `purpose: fine-tune`.
-
-Nos experimentos realizados, o modelo base atingiu **100% de acurácia** tanto no baseline simples quanto no conjunto desafiador controlado.
-
-Por isso, os próprios evals não apresentaram evidência de necessidade de Fine-tuning para essa tarefa específica.
-
-Também foi realizada uma tentativa real de criação de um job de Fine-tuning. O arquivo de treinamento foi aceito e processado pela plataforma, porém a criação do job retornou `HTTP 403`, informando que a organização utilizada no laboratório não está habilitada para criar novos jobs.
-
-O código correspondente foi preservado como exemplo manual em:
-
-```text
-tests/llm/fine-tuning/examples/createFineTuningJob.example.ts
-```
-
-Ele não faz parte da suíte automática.
-
-> Os resultados de Fine-tuning apresentados neste projeto foram obtidos em cenários controlados de estudo. Em sistemas reais, datasets, comportamento dos modelos, custo, latência e métricas podem variar.
-
-## Instalação
-
-```bash
-git clone https://github.com/RoxaneNayara/playwright-automation-lab.git
-cd playwright-automation-lab
-npm ci
-npx playwright install
-```
-
-Em ambientes Linux ou de integração contínua:
-
-```bash
-npx playwright install --with-deps
-```
-
-## Configuração para testes LLM
-
-Os testes que utilizam a OpenAI API dependem da variável:
-
-```text
-OPENAI_API_KEY
-```
-
-Ela deve ser configurada no ambiente local e nunca adicionada diretamente ao código ou ao repositório.
-
-No GitHub Actions, a chave é configurada como Repository Secret.
-
-## Execução dos testes
-
-### Suíte Web cross-browser
-
-```bash
-npm run test:cross-browser
-```
-
-### API DummyJSON
-
-```bash
-npx playwright test tests/api/dummyJson --project=api-dummyjson
-```
-
-### LLM
-
-```bash
-npx playwright test tests/llm --project=llm
-```
-
-### RAG
-
-```bash
-npx playwright test tests/llm/rag --project=llm
-```
-
-### Agents
-
-```bash
-npx playwright test tests/llm/agents --project=llm
-```
-
-### Fine-tuning
-
-```bash
-npx playwright test tests/llm/fine-tuning --project=llm
-```
-
-### Execuções Web específicas
-
-```bash
-npm run test:chromium
-npm run test:firefox
-npm run test:webkit
-npm run test:todo
-npm run test:saucedemo
-npm run test:smoke
-npm run test:headed
-```
-
-## Controles de qualidade
-
-```bash
-npm run format
-npm run format:check
-npm run typecheck
-npm run lint
-```
-
-Rotina recomendada antes de cada commit:
-
-```bash
-npm run format
-npm run format:check
-npm run typecheck
-npm run lint
-```
-
-Após alterações funcionais, recomenda-se executar também a suíte correspondente à área modificada.
-
-## Relatórios
-
-### Playwright HTML
-
-```bash
-npx playwright show-report
-```
-
-### Allure
-
-```bash
-npm run report:generate
-npm run report:open
-npm run report:serve
-```
-
-## Acessibilidade
-
-A suíte Web utiliza `@axe-core/playwright` para identificar violações automatizadas de acessibilidade.
-
-A automação complementa, mas não substitui, testes manuais com teclado, leitores de tela e avaliação humana.
-
-## GitHub Actions
-
-O workflow está localizado em:
-
-```text
-.github/workflows/playwright.yml
-```
-
-A pipeline executa:
+A pipeline executa verificações de:
 
 ```text
 Checkout
-→ instalação das dependências
-→ instalação dos navegadores
+→ dependências
+→ navegadores
 → Prettier
 → TypeScript
 → ESLint
-→ LLM CI quality gates
+→ LLM quality gates
 → testes Web cross-browser
-→ upload dos relatórios Playwright
-→ upload dos resultados Allure
+→ relatórios
 ```
 
-Os testes LLM adicionados ao CI são selecionados como **quality gates**, evitando executar indiscriminadamente cenários de maior custo ou operações externas que não devem fazer parte de cada pipeline.
+Os cenários de LLM executados no CI são selecionados como **quality gates**, evitando rodar indiscriminadamente testes de maior custo ou operações externas que não precisam fazer parte de toda execução.
 
-A variável `OPENAI_API_KEY` é fornecida ao workflow por meio de GitHub Actions Secrets.
+A chave da OpenAI é fornecida ao workflow por meio de **GitHub Actions Secrets** e não é armazenada no repositório.
 
-## Tags
+## Decisões técnicas importantes
 
-Os testes utilizam tags por tipo, aplicação, recurso, operação e característica de qualidade.
+Algumas decisões do laboratório foram tomadas para preservar independência, clareza e segurança técnica.
 
-Exemplos:
+### API pública externa
 
-```text
-@web
-@api
-@todo
-@sauceDemo
-@dummyJson
-@products
-@smoke
-@negative
-@robustness
-@functionalSuitability
-@reliability
-@compatibility
-@security
-```
+A trilha de testes de API utiliza uma API pública independente para que o laboratório de automação não dependa de sistemas autorais em desenvolvimento.
 
-Execução por tag:
+### Critérios experimentais em LLM
 
-```bash
-npx playwright test --grep "@checkout"
-```
+Métricas como Precision@K, Recall@K, F1, MRR, nDCG, thresholds de qualidade, custo e latência são utilizadas como critérios de estudo e não como padrões universais de produção.
+
+### Fine-tuning
+
+A trilha de Fine-tuning inclui preparação de dataset, JSONL, validação de qualidade, baseline, decision gates e upload real de arquivo com `purpose: fine-tune`.
+
+Nos experimentos realizados, o modelo base atingiu **100% de acurácia** nos conjuntos controlados avaliados, não apresentando evidência de necessidade de treinamento para essa tarefa específica.
+
+Também foi realizada uma tentativa real de criação de job de Fine-tuning. O dataset foi aceito e processado, porém a criação do job retornou `HTTP 403` devido à indisponibilidade da funcionalidade para a organização utilizada no laboratório.
+
+O exemplo correspondente foi preservado fora da suíte automática.
+
+## Status atual
+
+Atualmente o laboratório reúne:
+
+- automação Web consolidada;
+- testes de API pública;
+- trilha avançada de testes de sistemas com LLM;
+- relatórios Playwright e Allure;
+- quality gates no GitHub Actions;
+- controle de formatação, tipagem e lint;
+- execução cross-browser;
+- estudos de regressão, observabilidade, segurança e avaliação de modelos.
 
 ## Classificação do projeto
 
 Este repositório representa um **laboratório de estudos e prova de conceito**.
 
 Os padrões implementados podem servir como referência, mas devem ser avaliados e adaptados antes do uso em sistemas corporativos, considerando arquitetura, segurança, dados, ambientes, criticidade, custo e estratégia de testes.
-
-Os thresholds, datasets e critérios de aprovação utilizados nos testes de LLM são experimentais e foram definidos para fins de estudo.
 
 Resultados obtidos em cenários controlados não devem ser interpretados como garantia de comportamento equivalente em produção.
 
@@ -551,18 +226,13 @@ Desde essa release, o laboratório também evoluiu com trilhas de **API e testes
 
 ## Próximas evoluções
 
-- criação de clients e models reutilizáveis para API;
-- validação de contratos com JSON Schema;
-- autenticação reutilizável;
-- testes seguros de segurança de API;
-- integração entre API e interface;
-- geração de dados por API;
-- regressão visual;
-- publicação navegável do Allure;
-- ampliação dos datasets de avaliação LLM;
-- evolução dos quality gates de LLM;
-- externalização e reutilização de datasets;
-- evolução da documentação.
+- consolidar a próxima release do laboratório;
+- evoluir a arquitetura reutilizável de API;
+- ampliar datasets de avaliação LLM;
+- externalizar datasets e critérios compartilhados;
+- aprofundar testes de segurança e contratos;
+- evoluir a documentação técnica por trilha;
+- publicar relatórios navegáveis.
 
 ## Autora
 
