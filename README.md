@@ -19,11 +19,19 @@
 
 ## Sobre o projeto
 
-O **Playwright Automation Lab** é um laboratório de estudos e experimentação em automação de testes desenvolvido com **Playwright** e **TypeScript**.
+O **Playwright Automation Lab** é um projeto autoral desenvolvido com **Playwright** e **TypeScript** para estudo, experimentação e demonstração técnica de práticas de Qualidade de Software.
 
-O projeto foi criado para explorar diferentes frentes de qualidade de software de forma organizada, prática e incremental, reunindo automação **Web**, testes de **API** e uma trilha dedicada a **sistemas com LLM**.
+O laboratório foi concluído em seu **escopo atual**, reunindo três trilhas principais:
 
-Mais do que acumular cenários, o laboratório busca estudar como estruturar testes, avaliar comportamento, controlar riscos, medir qualidade e integrar verificações automatizadas ao fluxo de engenharia.
+- automação Web;
+- testes de API;
+- testes de sistemas baseados em LLM.
+
+Ao longo do projeto foram explorados testes funcionais, cenários end-to-end, regras de negócio, robustez, acessibilidade, RAG, embeddings, evals, prompt injection, Agents e Tool Calling, regressão, observabilidade, controle de custo e integração contínua.
+
+Mais do que validar respostas ou interfaces, o projeto busca demonstrar como diferentes características de qualidade podem ser avaliadas de forma automatizada, estruturada e reproduzível.
+
+> **Status:** projeto concluído no escopo atual, consolidado na release v2.0.0.
 
 ## Como o projeto foi pensado
 
@@ -201,46 +209,75 @@ Atualmente o laboratório reúne:
 
 - automação Web consolidada;
 - testes de API pública;
-- trilha avançada de testes de sistemas com LLM;
+- trilha dedicada a testes de sistemas com LLM;
 - relatórios Playwright e Allure;
 - quality gates no GitHub Actions;
 - controle de formatação, tipagem e lint;
 - execução cross-browser;
-- estudos de regressão, observabilidade, segurança e avaliação de modelos.
+- testes e experimentos de regressão, observabilidade, segurança e avaliação de modelos.
+
+O escopo planejado para esta etapa do laboratório foi concluído, contemplando automação Web, API e experimentação de qualidade em sistemas baseados em LLM.
 
 ## Classificação do projeto
 
-Este repositório representa um **laboratório de estudos e prova de conceito**.
+Este repositório representa um **projeto autoral de estudo, experimentação e prova de conceito em automação e Qualidade de Software**.
 
-Os padrões implementados podem servir como referência, mas devem ser avaliados e adaptados antes do uso em sistemas corporativos, considerando arquitetura, segurança, dados, ambientes, criticidade, custo e estratégia de testes.
+O projeto está **concluído em seu escopo atual**, mas não representa uma implementação corporativa ou uma solução de produção.
 
-Resultados obtidos em cenários controlados não devem ser interpretados como garantia de comportamento equivalente em produção.
+Os padrões, arquiteturas e abordagens implementados podem servir como referência técnica, porém devem ser avaliados e adaptados antes do uso em sistemas reais, considerando fatores como:
 
-## Release atual
+- arquitetura;
+- segurança;
+- dados;
+- ambientes;
+- criticidade;
+- custo;
+- estratégia de testes.
 
-A release atual é a **v2.0.0 — Expansão do Laboratório: API, LLM e CI Quality Gates**.
+Na trilha de LLM, thresholds, datasets e critérios de aprovação possuem caráter experimental e foram definidos para os cenários controlados do laboratório.
 
-Ela consolida a evolução do projeto para além da automação Web, incluindo:
+Resultados obtidos nesses experimentos não devem ser interpretados como garantia de comportamento equivalente em ambientes de produção.
 
+## Releases
+
+A release mais recente, **v2.0.0 — Expansão do Lab**, consolida a evolução do projeto para além da automação Web, incorporando as trilhas de **API** e **testes de sistemas com LLM** ao escopo do laboratório.
+
+A versão anterior, **v1.0.0 — Automação Web**, marcou a primeira etapa do projeto, reunindo:
+
+- 23 cenários automatizados Web;
+- 69 execuções cross-browser;
+- Chromium, Firefox e WebKit.
+
+A `v2.0.0` representa o escopo atual concluído do laboratório, abrangendo:
+
+- automação Web;
 - testes de API;
-- trilha de testes de sistemas com LLM;
-- Agents e Tool Calling;
-- RAG, evals, regressão e observabilidade;
-- quality gates de LLM no GitHub Actions;
-- evolução dos controles de qualidade e CI/CD.
+- testes de sistemas com LLM;
+- acessibilidade automatizada;
+- integração contínua;
+- quality gates;
+- relatórios Playwright e Allure;
+- experimentos com RAG, embeddings, evals, Agents, Tool Calling, segurança, observabilidade e Fine-tuning.
 
-[Ver detalhes da release v2.0.0](https://github.com/RoxaneNayara/playwright-automation-lab/releases/tag/v2.0.0)
+[Ver releases do projeto](https://github.com/RoxaneNayara/playwright-automation-lab/releases)
 
-A release anterior **v1.0.0 — Automação Web** permanece como marco inicial da consolidação da trilha Web.
+## Possíveis extensões futuras
 
-## Próximas evoluções
+O projeto está concluído no escopo atual. As ideias abaixo representam possibilidades de expansão e não pendências necessárias para sua conclusão:
 
-- evoluir a arquitetura reutilizável de API;
-- ampliar datasets de avaliação LLM;
-- externalizar datasets e critérios compartilhados;
-- aprofundar testes de segurança e contratos;
-- evoluir a documentação técnica por trilha;
-- publicar relatórios navegáveis.
+- criação de clients e models reutilizáveis para API;
+- validação de contratos com JSON Schema;
+- autenticação reutilizável;
+- testes seguros de segurança de API;
+- integração entre API e interface;
+- geração de dados por API;
+- regressão visual;
+- publicação navegável do Allure;
+- ampliação dos datasets de avaliação de LLM;
+- evolução dos quality gates de LLM;
+- externalização e reutilização de datasets.
+
+Essas extensões poderão ser exploradas futuramente conforme novos objetivos de estudo ou experimentação.
 
 ## Autora
 
