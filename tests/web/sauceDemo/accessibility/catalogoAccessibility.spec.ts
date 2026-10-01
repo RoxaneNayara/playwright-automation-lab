@@ -7,7 +7,7 @@ import { sauceUsuarios } from '@web/support/sauceDemo/sauceTestData';
 
 test.describe('Web · SauceDemo · Acessibilidade', () => {
   test(
-    'catálogo deve manter apenas as violações de acessibilidade conhecidas',
+    'catálogo não deve possuir violações automáticas WCAG A e AA',
     { tag: ['@web', '@sauceDemo', '@accessibility'] },
     async ({ page }) => {
       await allure.epic('Web');
@@ -32,13 +32,7 @@ test.describe('Web · SauceDemo · Acessibilidade', () => {
         elementos: violacao.nodes.map((node) => node.target.join(' ')),
       }));
 
-      expect(violacoesEncontradas).toEqual([
-        {
-          id: 'select-name',
-          impacto: 'critical',
-          elementos: ['select'],
-        },
-      ]);
+      expect(violacoesEncontradas).toEqual([]);
     }
   );
 });
