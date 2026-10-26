@@ -52,6 +52,9 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
+      - name: Run API tests
+        run: npm run test:api
+
       - name: Run cross-browser tests
         run: npm run test:cross-browser
 
