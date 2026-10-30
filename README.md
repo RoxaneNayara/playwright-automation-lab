@@ -149,6 +149,7 @@ playwright-automation-lab
 ├── README.md
 └── tsconfig.json
 ```
+
 A camada `src` segue o mesmo princípio nas trilhas Web e API: **Page Object** e flows para a interface, **Service Object** para as APIs, e `core` para configurações compartilhadas.
 
 ## Qualidade e engenharia
