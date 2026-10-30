@@ -31,7 +31,7 @@ Ao longo do projeto foram explorados testes funcionais, cenários end-to-end, re
 
 Mais do que validar respostas ou interfaces, o projeto busca demonstrar como diferentes características de qualidade podem ser avaliadas de forma automatizada, estruturada e reproduzível.
 
-> **Status:** projeto concluído no escopo atual, consolidado na release v2.0.0.
+> **Status:** projeto concluído no escopo atual, consolidado na release v2.1.0.
 
 ## Como o projeto foi pensado
 
@@ -76,7 +76,10 @@ Os cenários exploram:
 - robustez de entrada;
 - validação de estrutura e comportamento;
 - limites e dados inválidos;
-- respostas observadas em operações simuladas.
+- respostas observadas em operações simuladas;
+- Service Object para encapsular as chamadas HTTP.
+
+As requisições são centralizadas em uma camada de serviço (`src/api/services`), e os testes concentram apenas os dados do cenário e as validações. Assim, URLs e headers ficam em um único lugar, e os mesmos métodos atendem cenários positivos e negativos.
 
 A suíte de API possui **16 cenários automatizados**.
 
@@ -113,6 +116,9 @@ playwright-automation-lab
 ├── config
 ├── docs
 ├── src
+│   ├── api
+│   │   └── services
+│   │       └── dummyJson
 │   ├── core
 │   └── web
 │       ├── flows
@@ -143,6 +149,7 @@ playwright-automation-lab
 ├── README.md
 └── tsconfig.json
 ```
+A camada `src` segue o mesmo princípio nas trilhas Web e API: **Page Object** e flows para a interface, **Service Object** para as APIs, e `core` para configurações compartilhadas.
 
 ## Qualidade e engenharia
 
@@ -173,6 +180,7 @@ Checkout
 → TypeScript
 → ESLint
 → LLM quality gates
+→ testes de API
 → testes Web cross-browser
 → relatórios
 ```
@@ -240,7 +248,9 @@ Resultados obtidos nesses experimentos não devem ser interpretados como garanti
 
 ## Releases
 
-A release mais recente, **v2.0.0 — Expansão do Lab**, consolida a evolução do projeto para além da automação Web, incorporando as trilhas de **API** e **testes de sistemas com LLM** ao escopo do laboratório.
+A release mais recente, **v2.1.0 — Service Object nos testes de API**, reorganiza a trilha de API em camadas: as chamadas HTTP passam a ser encapsuladas em um serviço (`src/api/services`), seguindo o mesmo princípio do Page Object usado nos testes Web. Os 16 cenários de API foram migrados sem alteração de comportamento.
+
+A release **v2.0.0 — Expansão do Lab** consolidou a evolução do projeto para além da automação Web, incorporando as trilhas de **API** e **testes de sistemas com LLM** ao escopo do laboratório.
 
 A versão anterior, **v1.0.0 — Automação Web**, marcou a primeira etapa do projeto, reunindo:
 
@@ -248,7 +258,7 @@ A versão anterior, **v1.0.0 — Automação Web**, marcou a primeira etapa do p
 - 69 execuções cross-browser;
 - Chromium, Firefox e WebKit.
 
-A `v2.0.0` representa o escopo atual concluído do laboratório, abrangendo:
+A `v2.0.0` consolidou o escopo do laboratório, abrangendo:
 
 - automação Web;
 - testes de API;
@@ -265,7 +275,7 @@ A `v2.0.0` representa o escopo atual concluído do laboratório, abrangendo:
 
 O projeto está concluído no escopo atual. As ideias abaixo representam possibilidades de expansão e não pendências necessárias para sua conclusão:
 
-- criação de clients e models reutilizáveis para API;
+- models tipados e reutilizáveis para a camada de serviços de API;
 - validação de contratos com JSON Schema;
 - autenticação reutilizável;
 - testes seguros de segurança de API;
