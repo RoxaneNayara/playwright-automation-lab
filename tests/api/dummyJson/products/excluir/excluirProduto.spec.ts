@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type ProdutoExcluido = {
   id: number;
@@ -30,13 +30,11 @@ test.describe('API · DummyJSON · Produtos', () => {
       await allure.story('Exclusão simulada de produto');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
-
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
+      const productService = new ProductService(request);
 
       const produtoId = 1;
 
-      const response = await request.delete(`${baseUrl}/products/${produtoId}`);
+      const response = await productService.excluir(produtoId);
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();

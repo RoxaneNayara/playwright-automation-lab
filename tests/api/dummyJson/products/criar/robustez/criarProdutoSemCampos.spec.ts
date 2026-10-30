@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type ProdutoCriadoSemCampos = {
   id: number;
@@ -30,13 +30,9 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
       await allure.story('Criação de produto sem campos');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
+      const productService = new ProductService(request);
 
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
-
-      const response = await request.post(`${baseUrl}/products/add`, {
-        data: {},
-      });
+      const response = await productService.criar({});
 
       expect(response.status()).toBe(201);
       expect(response.ok()).toBeTruthy();

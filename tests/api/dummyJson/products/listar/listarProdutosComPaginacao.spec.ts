@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type ProdutoPaginado = {
   id: number;
@@ -37,19 +37,12 @@ test.describe('API · DummyJSON · Produtos', () => {
       await allure.story('Paginação de produtos');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
-
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
+      const productService = new ProductService(request);
 
       const limite = 5;
       const itensIgnorados = 10;
 
-      const response = await request.get(`${baseUrl}/products`, {
-        params: {
-          limit: limite,
-          skip: itensIgnorados,
-        },
-      });
+      const response = await productService.listar({ limit: limite, skip: itensIgnorados });
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();

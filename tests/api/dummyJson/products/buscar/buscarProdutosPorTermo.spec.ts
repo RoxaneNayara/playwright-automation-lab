@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type ProdutoEncontrado = {
   id: number;
@@ -40,17 +40,11 @@ test.describe('API · DummyJSON · Produtos', () => {
       await allure.story('Pesquisa de produtos');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
-
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
+      const productService = new ProductService(request);
 
       const termoDePesquisa = 'phone';
 
-      const response = await request.get(`${baseUrl}/products/search`, {
-        params: {
-          q: termoDePesquisa,
-        },
-      });
+      const response = await productService.buscarPorTermo(termoDePesquisa);
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();

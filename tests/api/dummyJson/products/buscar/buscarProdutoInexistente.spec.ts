@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type RespostaDeErro = {
   message: string;
@@ -28,13 +28,11 @@ test.describe('API · DummyJSON · Produtos', () => {
       await allure.story('Consulta de produto inexistente');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
-
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
+      const productService = new ProductService(request);
 
       const produtoIdInexistente = 999999;
 
-      const response = await request.get(`${baseUrl}/products/${produtoIdInexistente}`);
+      const response = await productService.buscarPorId(produtoIdInexistente);
 
       expect(response.status()).toBe(404);
       expect(response.ok()).toBeFalsy();

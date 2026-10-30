@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type RespostaCriacaoComContentTypeInvalido = {
   id: number;
@@ -31,9 +31,7 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
       await allure.story('Criação de produto com Content-Type inválido');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
-
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
+      const productService = new ProductService(request);
 
       const payload = {
         title: 'Produto com Content-Type inválido',
@@ -42,11 +40,8 @@ test.describe('API · DummyJSON · Produtos · Robustez', () => {
         price: 1500,
       };
 
-      const response = await request.post(`${baseUrl}/products/add`, {
-        headers: {
-          'content-type': 'text/plain',
-        },
-        data: JSON.stringify(payload),
+      const response = await productService.criar(JSON.stringify(payload), {
+        'content-type': 'text/plain',
       });
 
       expect(response.status()).toBe(201);

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import * as allure from 'allure-js-commons';
-import { config } from '@core/config/configurationManager';
+import { ProductService } from '@api/services/dummyJson/productService';
 
 type ProdutoAtualizado = {
   id: number;
@@ -33,9 +33,7 @@ test.describe('API · DummyJSON · Produtos', () => {
       await allure.story('Atualização completa simulada de produto');
       await allure.owner('Roxy');
 
-      const baseUrl = config.getBaseUrl('DummyJsonApi');
-
-      expect(baseUrl, 'BaseUrl não configurada para DummyJsonApi').toBeTruthy();
+      const productService = new ProductService(request);
 
       const produtoId = 1;
 
@@ -48,9 +46,7 @@ test.describe('API · DummyJSON · Produtos', () => {
         brand: 'Quality Lab Pro',
       };
 
-      const response = await request.put(`${baseUrl}/products/${produtoId}`, {
-        data: dadosAtualizados,
-      });
+      const response = await productService.atualizar(produtoId, dadosAtualizados);
 
       expect(response.status()).toBe(200);
       expect(response.ok()).toBeTruthy();
