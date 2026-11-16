@@ -79,5 +79,15 @@ export default defineConfig({
         ...devices['Desktop Safari'],
       },
     },
+    {
+      name: 'stability-lab',
+      testDir: './tests/stability',
+      retries: 0,
+      workers: 1,
+      use: {
+        ...devices['Desktop Chrome'],
+        trace: 'retain-on-failure',
+      },
+    },
   ],
 });
